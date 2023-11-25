@@ -23,31 +23,33 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="选择有时候比努力更重要">
-<meta property="og:type" content="website">
-<meta property="og:title" content="失地">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="一  环境准备开发一个简单的PHP页面123456if (isset($_GET[&#x27;content&#x27;])) &#123;    $content &#x3D; $_GET[&#x27;content&#x27;];    echo &quot;你输入的内容是：$content&quot;;&#125;else &#123;    echo &quot;请输入URL地址参数content&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS跨站攻击漏洞">
+<meta property="og:url" content="http://example.com/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/index.html">
 <meta property="og:site_name" content="失地">
-<meta property="og:description" content="选择有时候比努力更重要">
+<meta property="og:description" content="一  环境准备开发一个简单的PHP页面123456if (isset($_GET[&#x27;content&#x27;])) &#123;    $content &#x3D; $_GET[&#x27;content&#x27;];    echo &quot;你输入的内容是：$content&quot;;&#125;else &#123;    echo &quot;请输入URL地址参数content&amp;">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-25T05:40:59.868Z">
+<meta property="article:modified_time" content="2023-11-25T05:59:15.677Z">
 <meta property="article:author" content="倩影">
 <meta property="article:tag" content="coding">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>失地</title>
+  <title>XSS跨站攻击漏洞 | 失地</title>
   
 
 
@@ -166,9 +168,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -184,10 +187,9 @@
       <meta itemprop="name" content="失地">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">XSS跨站攻击漏洞</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          XSS跨站攻击漏洞
+        </h1>
 
         <div class="post-meta">
 		
@@ -227,7 +229,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="一-环境准备"><a href="#一-环境准备" class="headerlink" title="一  环境准备"></a>一  环境准备</h1><h2 id="开发一个简单的PHP页面"><a href="#开发一个简单的PHP页面" class="headerlink" title="开发一个简单的PHP页面"></a>开发一个简单的PHP页面</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;content&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$content</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;content&#x27;</span>];</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;你输入的内容是：<span class="subst">$content</span>&quot;</span>;</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;请输入URL地址参数content&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="一-环境准备"><a href="#一-环境准备" class="headerlink" title="一  环境准备"></a>一  环境准备</h1><h2 id="开发一个简单的PHP页面"><a href="#开发一个简单的PHP页面" class="headerlink" title="开发一个简单的PHP页面"></a>开发一个简单的PHP页面</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;content&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$content</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;content&#x27;</span>];</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;你输入的内容是：<span class="subst">$content</span>&quot;</span>;</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;请输入URL地址参数content&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="content参数执行javascript代码"><a href="#content参数执行javascript代码" class="headerlink" title="content参数执行javascript代码"></a>content参数执行javascript代码</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.88.130/security/testxss.php?content=&lt;script&gt;alert(1)&lt;/script&gt;</span></span><br><span class="line">http:<span class="comment">//192.168.88.130/security/testxss.php?content=&lt;button onclick=alert(&quot;你被攻击了&quot;)&gt;快点我&lt;/button&gt;</span></span><br><span class="line">http:<span class="comment">//192.168.88.130/security/testxss.php?content=&lt;script&gt;function test()&#123;alert(&quot;Hello Test&quot;)&#125;&lt;/script&gt;&lt;button onclick=&quot;test()&quot;&gt;快点我&lt;/button&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># URL编码中 + 代表空格，使用 + 需用 %2B</span></span><br><span class="line">http:<span class="comment">//192.168.88.130/security/testxss.php?content=&lt;script&gt;var result=0;for(var i=0;i&lt;=100;i%2B%2B)&#123;result %2B= i;&#125; alert(&quot;结果为:&quot;%2Bresult);&lt;/script&gt;</span></span><br><span class="line"><span class="comment"># 死循环攻击</span></span><br><span class="line">http:<span class="comment">//192.168.88.130/security/testxss.php?content=&lt;script&gt;var result=0;for(var i=0;i&lt;=100;i++)&#123;result += i;&#125; alert(result);&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
 <p><strong><em>XSS核心是构造出让前端执行的JavaScript代码</em></strong></p>
 <h1 id="二-XSS概述"><a href="#二-XSS概述" class="headerlink" title="二  XSS概述"></a>二  XSS概述</h1><p>XSS全称为：**<em>Cross Site Scripting</em>**，指跨站攻击脚本，XSS漏洞发生在前端，攻击的是浏览器的解析引擎，XSS就是让攻击者的JavaScript代码在受害者的浏览器上执行。<br>XSS攻击者的目的就是寻找具有XSS漏洞的网页，让受害者在不知情的情况下，在有XSS漏洞的网页上执行攻击者的JavaScript代码。<br>XSS是提前埋伏好漏洞陷阱，等着受害者上钩。既然攻击者是执行JavaScript代码，所以攻击的语句应该能让JavaScript运行。<br><strong><em>JavaScript运行条件:</em></strong></p>
@@ -267,7 +269,6 @@
 <h2 id="DOM型XSS"><a href="#DOM型XSS" class="headerlink" title="DOM型XSS"></a>DOM型XSS</h2><p>不与服务器交互，本质上也是一种反射型XSS。主要利用JS使用dom对前端html进行操作时候产生的漏洞。DOM型XSS的难点就在于通过阅读JavaScript来确定输出的位置，才好构建输入的payload。<br>DOM型XSS可通过开发者工具观察js变化</p>
 <h1 id="五-XSS的危害"><a href="#五-XSS的危害" class="headerlink" title="五  XSS的危害"></a>五  XSS的危害</h1><p>（1）网页挂马，利用浏览器挖矿等<br>（2）盗取用户Cookie并扮演用户角色。<br>（3）DOS(拒绝服务）客户端浏览器<br>（4）钓鱼攻击，高级的钓鱼技巧。 <code>&lt;iframe src=&quot;[https://www.baidu.com&quot;/&gt;](https://www.baidu.com&quot;/&gt;)</code><br>（5）删除目标文章、恶意篡改数据、嫁祸。<br>（6）劫持用户Web行为，甚至进一步渗透内网。<br>（7）爆发Web 2.0蠕虫：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/jason-jiang/articles/607070.html">https://www.cnblogs.com/jasonjiang/articles/607070.html</a><br>（8）蠕虫式的DDoS攻击。<br>（9）蠕虫式挂马攻击、刷广告、刷浏量、破坏网上数据!<br>一言以弊之，具体要实现何种危害，完全取决于你的JavaScript代码执行何种功能。</p>
 
-      
     </div>
 
     
@@ -275,232 +276,90 @@
     
 	
 	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="倩影">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="失地">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/" class="post-title-link" itemprop="url">linux 防火墙</a>
-        </h2>
-
-        <div class="post-meta">
-		
-		  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-11-25 10:33:57 / 修改时间：10:31:21" itemprop="dateCreated datePublished" datetime="2023-11-25T10:33:57+08:00">2023-11-25</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>943</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
+      <div>
+		<div>
     
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-atom"></i>感谢您的阅读-------------</div>
     
-    
-    <div class="post-body" itemprop="articleBody">
+</div>
+      </div>
+	
+        
 
-      
-          <p>firewall-cmd 命令是用于管理防火墙的命令，该命令可以用于 CentOS&#x2F;RHEL 7 和更高版本中的防火墙管理。<br>以下是一个关于 firewall-cmd 命令用法的完整介绍：</p>
-<h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=zone-name --add-service=service-name --permanent</span><br></pre></td></tr></table></figure>
-<h1 id="命令参数"><a href="#命令参数" class="headerlink" title="命令参数"></a>命令参数</h1><ul>
-<li>–zone：指定要添加服务的区域名称。</li>
-<li>–add-service：指定要添加的服务名称。</li>
-<li>–permanent：指定该规则永久生效。</li>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>倩影
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/" title="XSS跨站攻击漏洞">http://example.com/2023/11/25/XSS跨站攻击漏洞/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
 </ul>
-<p>除此之外，还有其他可选参数：</p>
-<ul>
-<li>–list-all：列出所有规则。</li>
-<li>–reload：重新加载防火墙规则。</li>
-<li>–permanent：将规则保存到永久配置中，以便系统重启后仍然有效。</li>
-<li>–delete-service：删除服务。</li>
-<li>–list-services：列出当前系统中所有可用服务。</li>
-<li>–add-source：添加一个 IP 或 IP 段。</li>
-<li>–remove-source：删除一个 IP 或 IP 段。</li>
-<li>–list-sources：列出所有已添加的 IP 或 IP 段。</li>
-<li>–add-port：添加端口。</li>
-<li>–remove-port：删除端口。</li>
-<li>–list-ports：列出所有已添加的端口。</li>
-<li>–add-rich-rule：添加一个更加复杂的规则。</li>
-<li>–query-service：查询服务是否可用。</li>
-<li>–get-zones：列出所有可用的区域。</li>
-<li>–zone&#x3D;zone-name：指定一个区域。</li>
-</ul>
-<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><ol>
-<li><p>添加端口：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>删除端口：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --remove-port=80/tcp --permanent</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-service=http --permanent</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>删除服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --remove-service=http --permanent</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列出所有规则：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --list-all</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>重新加载防火墙规则：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列出所有可用的服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --list-services</span><br></pre></td></tr></table></figure></li>
-</ol>
+</div>
 
-      
-    </div>
+        
 
-    
-    
-    
-	
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/24/hello-world/">
+    <div class="social-list">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="倩影">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="失地">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/24/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-		
-		  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-11-24 15:52:07" itemprop="dateCreated datePublished" datetime="2023-11-24T15:52:07+08:00">2023-11-24</time>
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
             </span>
 
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>367</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
+            <span class="label">WeChat</span>
+          </a>
         </div>
-      </header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
 
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
+            <span class="label">RSS</span>
+          </a>
+        </div>
     </div>
+  </div>
 
-    
-    
-    
-	
-	
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/" rel="prev" title="linux 防火墙">
+      <i class="fa fa-chevron-left"></i> linux 防火墙
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTIzMS8zNTY5Mw=="></div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -547,6 +406,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">一  环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84PHP%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.1.</span> <span class="nav-text">开发一个简单的PHP页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#content%E5%8F%82%E6%95%B0%E6%89%A7%E8%A1%8Cjavascript%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">content参数执行javascript代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-XSS%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">二  XSS概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-XSS%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">三  XSS渗透测试步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-XSS%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">四  XSS的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84%E5%9E%8BXSS"><span class="nav-number">4.1.</span> <span class="nav-text">反射型XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%9E%8BXSS"><span class="nav-number">4.2.</span> <span class="nav-text">存储型XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM%E5%9E%8BXSS"><span class="nav-number">4.3.</span> <span class="nav-text">DOM型XSS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94-XSS%E7%9A%84%E5%8D%B1%E5%AE%B3"><span class="nav-number">5.</span> <span class="nav-text">五  XSS的危害</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -715,6 +575,21 @@ setInterval("createtime()",250);
 
   
 
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
 
 </body>
 </html>
