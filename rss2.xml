@@ -9,8 +9,31 @@
     <atom:link href="http://example.com/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>选择有时候比努力更重要</description>
-    <pubDate>Fri, 24 Nov 2023 07:52:07 GMT</pubDate>
+    <pubDate>Sat, 25 Nov 2023 02:31:21 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>linux 防火墙</title>
+      <link>http://example.com/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/</link>
+      <guid>http://example.com/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/</guid>
+      <pubDate>Sat, 25 Nov 2023 02:33:57 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;firewall-cmd 命令是用于管理防火墙的命令，该命令可以用于 CentOS&amp;#x2F;RHEL 7 和更高版本中的防火墙管理。&lt;br&gt;以下是一个关于 firewall-cmd 命令用法的完整介绍：&lt;/p&gt;
+&lt;h1 id=&quot;基本语法&quot;&gt;&lt;a href=&quot;#基本语法&quot; </description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>firewall-cmd 命令是用于管理防火墙的命令，该命令可以用于 CentOS&#x2F;RHEL 7 和更高版本中的防火墙管理。<br>以下是一个关于 firewall-cmd 命令用法的完整介绍：</p><h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=zone-name --add-service=service-name --permanent</span><br></pre></td></tr></table></figure><h1 id="命令参数"><a href="#命令参数" class="headerlink" title="命令参数"></a>命令参数</h1><ul><li>–zone：指定要添加服务的区域名称。</li><li>–add-service：指定要添加的服务名称。</li><li>–permanent：指定该规则永久生效。</li></ul><p>除此之外，还有其他可选参数：</p><ul><li>–list-all：列出所有规则。</li><li>–reload：重新加载防火墙规则。</li><li>–permanent：将规则保存到永久配置中，以便系统重启后仍然有效。</li><li>–delete-service：删除服务。</li><li>–list-services：列出当前系统中所有可用服务。</li><li>–add-source：添加一个 IP 或 IP 段。</li><li>–remove-source：删除一个 IP 或 IP 段。</li><li>–list-sources：列出所有已添加的 IP 或 IP 段。</li><li>–add-port：添加端口。</li><li>–remove-port：删除端口。</li><li>–list-ports：列出所有已添加的端口。</li><li>–add-rich-rule：添加一个更加复杂的规则。</li><li>–query-service：查询服务是否可用。</li><li>–get-zones：列出所有可用的区域。</li><li>–zone&#x3D;zone-name：指定一个区域。</li></ul><h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><ol><li><p>添加端口：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br></pre></td></tr></table></figure></li><li><p>删除端口：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --remove-port=80/tcp --permanent</span><br></pre></td></tr></table></figure></li><li><p>添加服务：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-service=http --permanent</span><br></pre></td></tr></table></figure></li><li><p>删除服务：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --remove-service=http --permanent</span><br></pre></td></tr></table></figure></li><li><p>列出所有规则：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --list-all</span><br></pre></td></tr></table></figure></li><li><p>重新加载防火墙规则：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure></li><li><p>列出所有可用的服务：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --list-services</span><br></pre></td></tr></table></figure></li></ol>]]></content:encoded>
+      
+      
+      
+      
+      <comments>http://example.com/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>Hello World</title>

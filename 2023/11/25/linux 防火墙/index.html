@@ -23,30 +23,32 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="选择有时候比努力更重要">
-<meta property="og:type" content="website">
-<meta property="og:title" content="影苑">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="firewall-cmd 命令是用于管理防火墙的命令，该命令可以用于 CentOS&#x2F;RHEL 7 和更高版本中的防火墙管理。以下是一个关于 firewall-cmd 命令用法的完整介绍： 基本语法1firewall-cmd --zone&#x3D;zone-name --add-service&#x3D;service-name --permanent 命令参数 –zone：指定要添加服务的区域名称。 –a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 防火墙">
+<meta property="og:url" content="http://example.com/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/index.html">
 <meta property="og:site_name" content="影苑">
-<meta property="og:description" content="选择有时候比努力更重要">
+<meta property="og:description" content="firewall-cmd 命令是用于管理防火墙的命令，该命令可以用于 CentOS&#x2F;RHEL 7 和更高版本中的防火墙管理。以下是一个关于 firewall-cmd 命令用法的完整介绍： 基本语法1firewall-cmd --zone&#x3D;zone-name --add-service&#x3D;service-name --permanent 命令参数 –zone：指定要添加服务的区域名称。 –a">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-25T02:33:57.763Z">
+<meta property="article:modified_time" content="2023-11-25T02:31:21.486Z">
 <meta property="article:author" content="倩影">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>影苑</title>
+  <title>linux 防火墙 | 影苑</title>
   
 
 
@@ -165,9 +167,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -183,10 +186,9 @@
       <meta itemprop="name" content="影苑">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/" class="post-title-link" itemprop="url">linux 防火墙</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          linux 防火墙
+        </h1>
 
         <div class="post-meta">
 		
@@ -226,7 +228,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>firewall-cmd 命令是用于管理防火墙的命令，该命令可以用于 CentOS&#x2F;RHEL 7 和更高版本中的防火墙管理。<br>以下是一个关于 firewall-cmd 命令用法的完整介绍：</p>
+        <p>firewall-cmd 命令是用于管理防火墙的命令，该命令可以用于 CentOS&#x2F;RHEL 7 和更高版本中的防火墙管理。<br>以下是一个关于 firewall-cmd 命令用法的完整介绍：</p>
 <h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=zone-name --add-service=service-name --permanent</span><br></pre></td></tr></table></figure>
 <h1 id="命令参数"><a href="#命令参数" class="headerlink" title="命令参数"></a>命令参数</h1><ul>
 <li>–zone：指定要添加服务的区域名称。</li>
@@ -274,7 +276,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --list-services</span><br></pre></td></tr></table></figure></li>
 </ol>
 
-      
     </div>
 
     
@@ -282,109 +283,90 @@
     
 	
 	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+      <div>
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+	
+        
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/24/hello-world/">
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>倩影
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/" title="linux 防火墙">http://example.com/2023/11/25/linux 防火墙/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="倩影">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
+        
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="影苑">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/24/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
 
-        <div class="post-meta">
-		
-		  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+    <div class="social-list">
 
-              <time title="创建时间：2023-11-24 15:52:07" itemprop="dateCreated datePublished" datetime="2023-11-24T15:52:07+08:00">2023-11-24</time>
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
             </span>
 
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>367</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
+            <span class="label">WeChat</span>
+          </a>
         </div>
-      </header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
 
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
+            <span class="label">RSS</span>
+          </a>
+        </div>
     </div>
+  </div>
 
-    
-    
-    
-	
-	
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/24/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTIzMS8zNTY5Mw=="></div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -431,6 +413,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">命令参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">示例</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -605,6 +588,21 @@ setInterval("createtime()",250);
 
   
 
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
 
 </body>
 </html>
