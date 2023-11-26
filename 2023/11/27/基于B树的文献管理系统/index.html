@@ -28,22 +28,22 @@
   <meta name="description" content="一、功能介绍 入库：（管理员）购入新文献，确定文献号录入到系统中，如果文献存在，则将该文献的总库存量增加。 清除：（管理员）按文献号从系统中删除文献。 借阅：（登录状态）如果文献的现存量大于零，则登记借阅者证件号和归还日期后借出。 归还：（登录状态）注销借阅者登记，增加现存量。 检索：（登录状态）根据文献号给出某文献的相关信息。 预约：（登录状态）为预约者预留需要借阅的文献。 检索作者的文献：给出">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于B树的文献管理系统">
-<meta property="og:url" content="https://chengstery.top/2023/11/27/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:url" content="https://chengstery.top/2023/11/27/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="失地">
 <meta property="og:description" content="一、功能介绍 入库：（管理员）购入新文献，确定文献号录入到系统中，如果文献存在，则将该文献的总库存量增加。 清除：（管理员）按文献号从系统中删除文献。 借阅：（登录状态）如果文献的现存量大于零，则登记借阅者证件号和归还日期后借出。 归还：（登录状态）注销借阅者登记，增加现存量。 检索：（登录状态）根据文献号给出某文献的相关信息。 预约：（登录状态）为预约者预留需要借阅的文献。 检索作者的文献：给出">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chengstery.top/bt1.png">
-<meta property="og:image" content="https://chengstery.top/bt2.png">
-<meta property="og:image" content="https://chengstery.top/bt3.png">
-<meta property="og:image" content="https://chengstery.top/Btree.png">
+<meta property="og:image" content="https://chengstery.top/images/bt1.png">
+<meta property="og:image" content="https://chengstery.top/images/bt2.png">
+<meta property="og:image" content="https://chengstery.top/images/bt3.png">
+<meta property="og:image" content="https://chengstery.top/images/Btree.png">
 <meta property="article:published_time" content="2023-11-26T17:02:03.361Z">
-<meta property="article:modified_time" content="2023-11-26T17:01:51.336Z">
+<meta property="article:modified_time" content="2023-11-26T17:12:59.209Z">
 <meta property="article:author" content="stery">
 <meta property="article:tag" content="coding">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chengstery.top/bt1.png">
+<meta name="twitter:image" content="https://chengstery.top/images/bt1.png">
 
-<link rel="canonical" href="https://chengstery.top/2023/11/27/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">
+<link rel="canonical" href="https://chengstery.top/2023/11/27/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">
 
 
 <script id="page-configurations">
@@ -182,7 +182,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/11/27/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">
+    <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/11/27/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -208,7 +208,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-11-27 01:02:03 / 修改时间：01:01:51" itemprop="dateCreated datePublished" datetime="2023-11-27T01:02:03+08:00">2023-11-27</time>
+              <time title="创建时间：2023-11-27 01:02:03 / 修改时间：01:12:59" itemprop="dateCreated datePublished" datetime="2023-11-27T01:02:03+08:00">2023-11-27</time>
             </span>
 
           <br>
@@ -264,11 +264,11 @@
 
 <p>上述代码中的二维数组是按钮位置的信息。<br>和<code>button_judge</code>函数 实现了按钮的判断，返回值为按钮的编号。</p>
 <p>(x<sub>1</sub>, y<sub>1</sub>, x<sub>2</sub>, y<sub>2</sub>) 分别为按钮的左上角和右下角的坐标。</p>
-<h3 id="4-3-效果展示"><a href="#4-3-效果展示" class="headerlink" title="4.3 效果展示"></a>4.3 效果展示</h3><p><img src="/./bt1.png" alt="未登录"><br><img src="/./bt2.png" alt="用户登录"><br><img src="/./bt3.png" alt="管理员登录"></p>
+<h3 id="4-3-效果展示"><a href="#4-3-效果展示" class="headerlink" title="4.3 效果展示"></a>4.3 效果展示</h3><p><img src="/./images/bt1.png" alt="未登录"><br><img src="/./images/bt2.png" alt="用户登录"><br><img src="/./images/bt3.png" alt="管理员登录"></p>
 <h2 id="五、B树的可视化"><a href="#五、B树的可视化" class="headerlink" title="五、B树的可视化"></a>五、B树的可视化</h2><p>在编写B树的代码时，为了方便调试，B树的可视化是必不可少的。<br>这里的可视化借助了<a target="_blank" rel="noopener" href="https://graphviz.org/">Graphviz</a>工具，使用了Graphviz的DOT语言来实现。<br>(其他树形结构也可以使用这个工具)</p>
 <h3 id="5-1-实现代码"><a href="#5-1-实现代码" class="headerlink" title="5.1 实现代码"></a>5.1 实现代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 辅助函数：递归打印B树的结点</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printNode</span><span class="params">(BTree node, FILE *out)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (node != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(out, <span class="string">&quot;%d [label=\&quot;&quot;</span>, node-&gt;key[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= node-&gt;keyNum; ++i) &#123;</span><br><span class="line">            <span class="built_in">fprintf</span>(out, <span class="string">&quot;%d&quot;</span>, node-&gt;key[i]);</span><br><span class="line">            <span class="keyword">if</span> (i &lt; node-&gt;keyNum) &#123;</span><br><span class="line">                <span class="built_in">fprintf</span>(out, <span class="string">&quot;,&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">fprintf</span>(out, <span class="string">&quot;\&quot;];\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= node-&gt;keyNum; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (node-&gt;ptr[i] != <span class="literal">NULL</span>) &#123;</span><br><span class="line">                <span class="built_in">fprintf</span>(out, <span class="string">&quot;%d -&gt; %d;\n&quot;</span>, node-&gt;key[<span class="number">1</span>], node-&gt;ptr[i]-&gt;key[<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= node-&gt;keyNum; ++i) &#123;</span><br><span class="line">            <span class="built_in">printNode</span>(node-&gt;ptr[i], out);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打开文件并写入B树的DOT格式</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">treePrint</span><span class="params">(BTree root)</span> </span>&#123;</span><br><span class="line">    FILE *out = <span class="built_in">fopen</span>(<span class="string">&quot;./Btree.dot&quot;</span>, <span class="string">&quot;w&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (out == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;Error opening file&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">fprintf</span>(out, <span class="string">&quot;digraph &#123;\nnode[shape=record];\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printNode</span>(root, out);</span><br><span class="line">    <span class="built_in">fprintf</span>(out, <span class="string">&quot;&#125;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">fclose</span>(out);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 执行 dot 命令来生成图像</span></span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;.\\Graphviz\\bin\\dot -Tpng ./Btree.dot -o ./Btree.png&quot;</span>);</span><br><span class="line">    <span class="built_in">sprintf</span>(mes, <span class="string">&quot;在当前文件夹生成tree.png文件&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="5-2效果展示"><a href="#5-2效果展示" class="headerlink" title="5.2效果展示"></a>5.2效果展示</h2><p><img src="/./Btree.png" alt="B树可视化"></p>
+<h2 id="5-2效果展示"><a href="#5-2效果展示" class="headerlink" title="5.2效果展示"></a>5.2效果展示</h2><p><img src="/./images/Btree.png" alt="B树可视化"></p>
 <h2 id="六、说明"><a href="#六、说明" class="headerlink" title="六、说明"></a>六、说明</h2><ol>
 <li>大概能看懂就能套用图形化界面使用，大概懂得<code>InputBox</code>(小窗口输入),<code>MessageBoxA(弹窗提示</code>就可以完成简单的图形化了（当然按钮功能更能体现图形化）</li>
 <li>学有余力可以去了解.dot语法，这个可以帮助生成树形抽象数据结构的可视化图片。</li>
@@ -299,7 +299,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://chengstery.top/2023/11/27/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" title="基于B树的文献管理系统">https://chengstery.top/2023/11/27/基于B树的文献管理系统/基于B树的文献管理系统/</a>
+    <a href="https://chengstery.top/2023/11/27/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" title="基于B树的文献管理系统">https://chengstery.top/2023/11/27/基于B树的文献管理系统/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
