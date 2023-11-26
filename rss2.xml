@@ -4,9 +4,9 @@
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>失地</title>
-    <link>http://example.com/</link>
+    <link>https://chengstery.github.io/</link>
     
-    <atom:link href="http://example.com/rss2.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://chengstery.github.io/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>选择有时候比努力更重要</description>
     <pubDate>Sun, 26 Nov 2023 04:39:13 GMT</pubDate>
@@ -14,8 +14,8 @@
     
     <item>
       <title>红黑树插入删除和可视化的代码实现</title>
-      <link>http://example.com/2023/11/26/%E7%BA%A2%E9%BB%91%E6%A0%91%E6%8F%92%E5%85%A5%E5%88%A0%E9%99%A4%E5%92%8C%E5%8F%AF%E8%A7%86%E5%8C%96/</link>
-      <guid>http://example.com/2023/11/26/%E7%BA%A2%E9%BB%91%E6%A0%91%E6%8F%92%E5%85%A5%E5%88%A0%E9%99%A4%E5%92%8C%E5%8F%AF%E8%A7%86%E5%8C%96/</guid>
+      <link>https://chengstery.github.io/2023/11/26/%E7%BA%A2%E9%BB%91%E6%A0%91%E6%8F%92%E5%85%A5%E5%88%A0%E9%99%A4%E5%92%8C%E5%8F%AF%E8%A7%86%E5%8C%96/</link>
+      <guid>https://chengstery.github.io/2023/11/26/%E7%BA%A2%E9%BB%91%E6%A0%91%E6%8F%92%E5%85%A5%E5%88%A0%E9%99%A4%E5%92%8C%E5%8F%AF%E8%A7%86%E5%8C%96/</guid>
       <pubDate>Sat, 25 Nov 2023 16:15:24 GMT</pubDate>
       
         
@@ -30,14 +30,14 @@
       
       
       
-      <comments>http://example.com/2023/11/26/%E7%BA%A2%E9%BB%91%E6%A0%91%E6%8F%92%E5%85%A5%E5%88%A0%E9%99%A4%E5%92%8C%E5%8F%AF%E8%A7%86%E5%8C%96/#disqus_thread</comments>
+      <comments>https://chengstery.github.io/2023/11/26/%E7%BA%A2%E9%BB%91%E6%A0%91%E6%8F%92%E5%85%A5%E5%88%A0%E9%99%A4%E5%92%8C%E5%8F%AF%E8%A7%86%E5%8C%96/#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>XSS跨站攻击漏洞</title>
-      <link>http://example.com/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/</link>
-      <guid>http://example.com/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/</guid>
+      <link>https://chengstery.github.io/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/</link>
+      <guid>https://chengstery.github.io/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/</guid>
       <pubDate>Sat, 25 Nov 2023 05:40:59 GMT</pubDate>
       
         
@@ -52,14 +52,14 @@
       
       
       
-      <comments>http://example.com/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/#disqus_thread</comments>
+      <comments>https://chengstery.github.io/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/#disqus_thread</comments>
       
     </item>
     
     <item>
       <title>linux 防火墙</title>
-      <link>http://example.com/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/</link>
-      <guid>http://example.com/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/</guid>
+      <link>https://chengstery.github.io/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/</link>
+      <guid>https://chengstery.github.io/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/</guid>
       <pubDate>Sat, 25 Nov 2023 02:33:57 GMT</pubDate>
       
         
@@ -75,7 +75,7 @@
       
       
       
-      <comments>http://example.com/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/#disqus_thread</comments>
+      <comments>https://chengstery.github.io/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/#disqus_thread</comments>
       
     </item>
     
