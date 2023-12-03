@@ -25,20 +25,20 @@
     var CONFIG = {"hostname":"chengstery.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="firewall-cmd 命令是用于管理防火墙的命令，该命令可以用于 CentOS&#x2F;RHEL 7 和更高版本中的防火墙管理。以下是一个关于 firewall-cmd 命令用法的完整介绍： 基本语法1firewall-cmd --zone&#x3D;zone-name --add-service&#x3D;service-name --permanent 命令参数 –zone：指定要添加服务的区域名称。 –a">
+  <meta name="description" content="前言 在前面我们基本实现了一个简单的登录功能，但是在登录功能中存在着一些漏洞，比如SQL注入漏洞（对引号敏感），任意访问授权页面，登录页面报错，明文存储密码等，本文将对部分漏洞进行修复  一、使用Python进行注入测试 首先我们使用python代码对登录页面进行Fuzz测试，看看是否存在SQL注入漏洞，如果存在，则继续利用  12345678910111213141516171819202122">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux 防火墙操作命令使用">
-<meta property="og:url" content="https://chengstery.top/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/index.html">
+<meta property="og:title" content="SQL注入-登录漏洞-基础修复">
+<meta property="og:url" content="https://chengstery.top/2023/12/03/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-%E5%9F%BA%E7%A1%80%E4%BF%AE%E5%A4%8D/index.html">
 <meta property="og:site_name" content="chengstery">
-<meta property="og:description" content="firewall-cmd 命令是用于管理防火墙的命令，该命令可以用于 CentOS&#x2F;RHEL 7 和更高版本中的防火墙管理。以下是一个关于 firewall-cmd 命令用法的完整介绍： 基本语法1firewall-cmd --zone&#x3D;zone-name --add-service&#x3D;service-name --permanent 命令参数 –zone：指定要添加服务的区域名称。 –a">
+<meta property="og:description" content="前言 在前面我们基本实现了一个简单的登录功能，但是在登录功能中存在着一些漏洞，比如SQL注入漏洞（对引号敏感），任意访问授权页面，登录页面报错，明文存储密码等，本文将对部分漏洞进行修复  一、使用Python进行注入测试 首先我们使用python代码对登录页面进行Fuzz测试，看看是否存在SQL注入漏洞，如果存在，则继续利用  12345678910111213141516171819202122">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-11-25T02:33:57.763Z">
-<meta property="article:modified_time" content="2023-11-28T11:05:57.314Z">
+<meta property="article:published_time" content="2023-12-03T15:13:56.749Z">
+<meta property="article:modified_time" content="2023-12-03T15:13:35.024Z">
 <meta property="article:author" content="stery">
 <meta property="article:tag" content="coding">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://chengstery.top/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/">
+<link rel="canonical" href="https://chengstery.top/2023/12/03/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-%E5%9F%BA%E7%A1%80%E4%BF%AE%E5%A4%8D/">
 
 
 <script id="page-configurations">
@@ -51,7 +51,7 @@
   };
 </script>
 
-  <title>linux 防火墙操作命令使用 | chengstery</title>
+  <title>SQL注入-登录漏洞-基础修复 | chengstery</title>
   
 
 
@@ -177,7 +177,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/">
+    <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/12/03/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-%E5%9F%BA%E7%A1%80%E4%BF%AE%E5%A4%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -190,7 +190,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          linux 防火墙操作命令使用
+          SQL注入-登录漏洞-基础修复
         </h1>
 
         <div class="post-meta">
@@ -201,23 +201,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2023-11-25 10:33:57" itemprop="dateCreated datePublished" datetime="2023-11-25T10:33:57+08:00">2023-11-25</time>
+              <time title="创建时间：2023-12-03 23:13:56 / 修改时间：23:13:35" itemprop="dateCreated datePublished" datetime="2023-12-03T23:13:56+08:00">2023-12-03</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-28 19:05:57" itemprop="dateModified" datetime="2023-11-28T19:05:57+08:00">2023-11-28</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                  <a href="/categories/SQL%E6%B3%A8%E5%85%A5/" itemprop="url" rel="index"><span itemprop="name">SQL注入</span></a>
                 </span>
             </span>
 
@@ -227,14 +221,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>943</span>
+              <span>2.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -246,52 +240,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>firewall-cmd 命令是用于管理防火墙的命令，该命令可以用于 CentOS&#x2F;RHEL 7 和更高版本中的防火墙管理。<br>以下是一个关于 firewall-cmd 命令用法的完整介绍：</p>
-<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=zone-name --add-service=service-name --permanent</span><br></pre></td></tr></table></figure>
-<h2 id="命令参数"><a href="#命令参数" class="headerlink" title="命令参数"></a>命令参数</h2><ul>
-<li>–zone：指定要添加服务的区域名称。</li>
-<li>–add-service：指定要添加的服务名称。</li>
-<li>–permanent：指定该规则永久生效。</li>
-</ul>
-<p>除此之外，还有其他可选参数：</p>
-<ul>
-<li>–list-all：列出所有规则。</li>
-<li>–reload：重新加载防火墙规则。</li>
-<li>–permanent：将规则保存到永久配置中，以便系统重启后仍然有效。</li>
-<li>–delete-service：删除服务。</li>
-<li>–list-services：列出当前系统中所有可用服务。</li>
-<li>–add-source：添加一个 IP 或 IP 段。</li>
-<li>–remove-source：删除一个 IP 或 IP 段。</li>
-<li>–list-sources：列出所有已添加的 IP 或 IP 段。</li>
-<li>–add-port：添加端口。</li>
-<li>–remove-port：删除端口。</li>
-<li>–list-ports：列出所有已添加的端口。</li>
-<li>–add-rich-rule：添加一个更加复杂的规则。</li>
-<li>–query-service：查询服务是否可用。</li>
-<li>–get-zones：列出所有可用的区域。</li>
-<li>–zone&#x3D;zone-name：指定一个区域。</li>
-</ul>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ol>
-<li><p>添加端口：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>删除端口：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --remove-port=80/tcp --permanent</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-service=http --permanent</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>删除服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --remove-service=http --permanent</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列出所有规则：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --list-all</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>重新加载防火墙规则：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列出所有可用的服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --list-services</span><br></pre></td></tr></table></figure></li>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>在前面我们基本实现了一个<a href="https://chengstery.top/2023/12/02/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-4/">简单的登录功能</a>，<br>但是在登录功能中存在着一些漏洞，比如SQL注入漏洞（对引号敏感），任意访问授权页面，登录页面报错，明文存储密码等，本文将对部分漏洞进行修复</p>
+</blockquote>
+<h2 id="一、使用Python进行注入测试"><a href="#一、使用Python进行注入测试" class="headerlink" title="一、使用Python进行注入测试"></a>一、使用Python进行注入测试</h2><blockquote>
+<p>首先我们使用python代码对登录页面进行Fuzz测试，看看是否存在SQL注入漏洞，如果存在，则继续利用</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用Python对PHP的登录页面进行Fuzz测试</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login_fuzz</span>():</span><br><span class="line">    <span class="comment"># 先使用单引号进行探索</span></span><br><span class="line">    url = <span class="string">&#x27;http://192.168.88.130/security/login.php&#x27;</span></span><br><span class="line">    data = &#123;<span class="string">&#x27;username&#x27;</span>:<span class="string">&quot;&#x27;&quot;</span>,<span class="string">&#x27;password&#x27;</span>:<span class="string">&#x27;admin123&#x27;</span>,<span class="string">&#x27;vcode&#x27;</span>:<span class="string">&#x27;0000&#x27;</span>&#125;</span><br><span class="line">    resp = requests.post(url=url,data=data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> resp.status_code != <span class="number">200</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;本登录功能可能存在SQL注入漏洞&#x27;</span>)</span><br><span class="line">        <span class="comment"># 如果单引号存在利用嫌疑，则继续利用</span></span><br><span class="line">        payload_list = [<span class="string">&quot;x&#x27; or id=1#&quot;</span>,<span class="string">&quot;x&#x27; or uid=1#&quot;</span>,<span class="string">&quot;x&#x27; or userid=1#&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;x&#x27; or userid=2#&quot;</span>,<span class="string">&quot;&#x27; or userid=1#&quot;</span>]</span><br><span class="line">        <span class="keyword">for</span> username <span class="keyword">in</span> payload_list:</span><br><span class="line">            data = &#123;<span class="string">&#x27;username&#x27;</span>:username,<span class="string">&#x27;password&#x27;</span>:<span class="string">&#x27;admin123&#x27;</span>,<span class="string">&#x27;vcode&#x27;</span>:<span class="string">&#x27;0000&#x27;</span>&#125;</span><br><span class="line">            resp = requests.post(url,data)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&#x27;login-fail&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> resp.text <span class="keyword">and</span> resp.status_code==<span class="number">200</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&#x27;登录成功!,Payload为：<span class="subst">&#123;data&#125;</span>&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;登录界面对单引号不敏感&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    login_fuzz()</span><br></pre></td></tr></table></figure>
+<h2 id="二、任意访问授权页面"><a href="#二、任意访问授权页面" class="headerlink" title="二、任意访问授权页面"></a>二、任意访问授权页面</h2><p>无论用户是否登录成功，均可直接输入：<code>http://你的网页地址/security/welcome.php</code>访问，而页面是要求登录成功后才能访问，所以在该页面需要进行登录判断，代码修改为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.在commom.php中添加<span class="title function_ invoke__">session_start</span>(),让其他页面引入，便于直接使用:Session</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>.在welcome.php页面中，源代码修改为:</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">include</span> <span class="string">&quot;common.php&quot;</span>;</span><br><span class="line"><span class="comment">//修复漏洞，在显示文本前，先进行SESSION验证</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;islogin&#x27;</span>]) <span class="keyword">or</span> <span class="variable">$_SESSION</span>[<span class="string">&#x27;islogin&#x27;</span>] != <span class="string">&#x27;true&#x27;</span>) &#123;</span><br><span class="line">  <span class="keyword">die</span>(<span class="string">&quot;你还没有登录，无法访问本页面&lt;/br&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;欢迎登录安全测试平台&lt;/br&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="number">3</span>.在login.php中，登录成功后添加如下代码:</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">mysqli_num_rows</span>(<span class="variable">$result</span>) == <span class="number">1</span>)&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;login-pass&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//登录成功后，记录SESSION变量</span></span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>] = <span class="variable">$username</span>;</span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;islogin&#x27;</span>] = <span class="string">&#x27;true&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;script&gt;location.href=&#x27;welcome.php&#x27;&lt;/script&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="三、修复login-php报错"><a href="#三、修复login-php报错" class="headerlink" title="三、修复login.php报错"></a>三、修复login.php报错</h2><p>当在用户名输入单引号时，会引起后台报错，一方面说明后台没有对单引号进行转义处理，导致单引号可以被注入到SQL语句中，进而导致SQL语句中存在单独的一个单引号，SQL语句无法有效闭合，发生错误。修复代码如下:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$result</span> = <span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$conn</span>,<span class="variable">$sql</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;SQL语句执行错误&quot;</span>);   <span class="comment">//result获取到的查询结果，称为结果集</span></span><br></pre></td></tr></table></figure>
+<h2 id="四、加密用户表密码"><a href="#四、加密用户表密码" class="headerlink" title="四、加密用户表密码"></a>四、加密用户表密码</h2><blockquote>
+<p>md5加密算法是一种不可逆的加密算法，是一种不错的方法，当然你也可以使用其他的加密算法，比如sha1等，但是不建议使用明文存储密码，因为这样会导致用户密码泄露，造成不必要的损失，所以我们</p>
+</blockquote>
+<blockquote>
+<p>我们可以使用md5函数， 演示代码如下:</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//MD5函数用于字符串加密</span></span><br><span class="line"><span class="variable">$source</span> = <span class="string">&#x27;Hello123&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">md5</span>(<span class="variable">$source</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//提示一:user表中的password字段必须是32+位</span></span><br><span class="line"><span class="comment">//提示二:在用户注册时，必须用md5函数将密码加密保存</span></span><br></pre></td></tr></table></figure>
+<h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><ol>
+<li>完整代码可以在我的<a target="_blank" rel="noopener" href="https://github.com/chengstery/security/tree/main/linux_login">github</a>上查看，这些代码都是部署在linux上的</li>
+<li>本文只是简单说明了一些漏洞的存在和进行了修复一些基础漏洞，下面我们将挖掘更多漏洞来修复</li>
 </ol>
 
     </div>
@@ -318,7 +287,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://chengstery.top/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/" title="linux 防火墙操作命令使用">https://chengstery.top/2023/11/25/linux 防火墙/</a>
+    <a href="https://chengstery.top/2023/12/03/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-%E5%9F%BA%E7%A1%80%E4%BF%AE%E5%A4%8D/" title="SQL注入-登录漏洞-基础修复">https://chengstery.top/2023/12/03/SQL注入-登录漏洞-基础修复/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -363,10 +332,13 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/" rel="next" title="XSS跨站攻击漏洞的示例和简单介绍">
-      XSS跨站攻击漏洞的示例和简单介绍 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/12/02/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-4/" rel="prev" title="学习渗透测试的学前准备-后台-2">
+      <i class="fa fa-chevron-left"></i> 学习渗透测试的学前准备-后台-2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/12/03/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-%E9%AA%8C%E8%AF%81%E7%A0%81/" rel="next" title="SQL注入-登录漏洞-验证码">
+      SQL注入-登录漏洞-验证码 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -431,7 +403,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">命令参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">示例</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BD%BF%E7%94%A8Python%E8%BF%9B%E8%A1%8C%E6%B3%A8%E5%85%A5%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">一、使用Python进行注入测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BB%BB%E6%84%8F%E8%AE%BF%E9%97%AE%E6%8E%88%E6%9D%83%E9%A1%B5%E9%9D%A2"><span class="nav-number">3.</span> <span class="nav-text">二、任意访问授权页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BF%AE%E5%A4%8Dlogin-php%E6%8A%A5%E9%94%99"><span class="nav-number">4.</span> <span class="nav-text">三、修复login.php报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%8A%A0%E5%AF%86%E7%94%A8%E6%88%B7%E8%A1%A8%E5%AF%86%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text">四、加密用户表密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">五、总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
