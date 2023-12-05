@@ -25,18 +25,22 @@
     var CONFIG = {"hostname":"chengstery.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="选择有时候比努力更重要">
-<meta property="og:type" content="website">
-<meta property="og:title" content="chengstery">
-<meta property="og:url" content="https://chengstery.top/archives/2023/page/2/index.html">
+  <meta name="description" content="HTTP协议默认是无状态协议：由于HTTP的被动式响应及单向通道的特点，导致服务器无法知道客户端是谁。 为了解决上述问题，需要使用Session来将客户端的状态保存在服务器的（内存或硬盘中）。    在服务器分配Session ID 给客户端时，会以  【Set-Cookie:PHPSESSIONID&#x3D;9tbbu4aa06m34cj3ev1q8fr7e6;path&#x3D;&amp;#x2F">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP学习-Session&amp;Cookie">
+<meta property="og:url" content="https://chengstery.top/2023/12/05/PHP%E5%AD%A6%E4%B9%A0-Session&Cookie/index.html">
 <meta property="og:site_name" content="chengstery">
-<meta property="og:description" content="选择有时候比努力更重要">
+<meta property="og:description" content="HTTP协议默认是无状态协议：由于HTTP的被动式响应及单向通道的特点，导致服务器无法知道客户端是谁。 为了解决上述问题，需要使用Session来将客户端的状态保存在服务器的（内存或硬盘中）。    在服务器分配Session ID 给客户端时，会以  【Set-Cookie:PHPSESSIONID&#x3D;9tbbu4aa06m34cj3ev1q8fr7e6;path&#x3D;&amp;#x2F">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chengstery.top/images/session.jpg">
+<meta property="article:published_time" content="2023-12-05T14:10:47.670Z">
+<meta property="article:modified_time" content="2023-12-05T14:10:40.439Z">
 <meta property="article:author" content="stery">
 <meta property="article:tag" content="coding">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chengstery.top/images/session.jpg">
 
-<link rel="canonical" href="https://chengstery.top/archives/2023/page/2/">
+<link rel="canonical" href="https://chengstery.top/2023/12/05/PHP%E5%AD%A6%E4%B9%A0-Session&Cookie/">
 
 
 <script id="page-configurations">
@@ -44,12 +48,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | chengstery</title>
+  <title>PHP学习-Session&Cookie | chengstery</title>
   
 
 
@@ -168,199 +172,183 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 18 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/12/05/PHP%E5%AD%A6%E4%B9%A0-Session&Cookie/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="stery">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chengstery">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHP学习-Session&Cookie
+        </h1>
+
+        <div class="post-meta">
+		
+		  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-12-05 22:10:47 / 修改时间：22:10:40" itemprop="dateCreated datePublished" datetime="2023-12-05T22:10:47+08:00">2023-12-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">PHP学习</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>311</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
+        <ol>
+<li>HTTP协议默认是无状态协议：由于HTTP的被动式响应及单向通道的特点，导致服务器无法知道客户端是谁。</li>
+<li>为了解决上述问题，需要使用Session来将客户端的状态保存在服务器的（内存或硬盘中）。</li>
+</ol>
+<p><img src="/../images/session.jpg" alt="session关系图"></p>
+<ol start="3">
+<li>在服务器分配Session ID 给客户端时，会以</li>
+</ol>
+<p>【Set-Cookie:PHPSESSIONID&#x3D;9tbbu4aa06m34cj3ev1q8fr7e6;path&#x3D;&#x2F;】在响应当中告诉客户端。此时，注意一下 path&#x3D;&#x2F; 这个值，表示当前Cookie的作用范围是htdocs这个网站ROOT根目录的范围，会存在安全问题。</p>
+<ol start="4">
+<li>当用户登录成功后，将用户名和密码保存在客户端，下一次免输入用户名和密码。</li>
+</ol>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-12-02T23:39:04+08:00"
-              content="2023-12-02">
-          12-02
-        </time>
+    
+    
+    
+	
+	
+      <div>
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-atom"></i>感谢您的阅读-------------</div>
+    
+</div>
       </div>
+	
+        
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/12/02/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-4/" itemprop="url">
-            <span itemprop="name">学习渗透测试的学前准备-后台-2</span>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>stery
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chengstery.top/2023/12/05/PHP%E5%AD%A6%E4%B9%A0-Session&Cookie/" title="PHP学习-Session&amp;Cookie">https://chengstery.top/2023/12/05/PHP学习-Session&Cookie/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
           </a>
-      </div>
+        </div>
 
-    </header>
-  </article>
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-12-02T21:31:20+08:00"
-              content="2023-12-02">
-          12-02
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/12/02/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-3/" itemprop="url">
-            <span itemprop="name">学习渗透测试的学前准备-后台-1</span>
+            <span class="label">RSS</span>
           </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T23:30:28+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-2/" itemprop="url">
-            <span itemprop="name">学习渗透测试的学前准备-前端-2</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T22:32:24+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-1/" itemprop="url">
-            <span itemprop="name">学习渗透测试的学前准备-前端-1</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-27T01:02:03+08:00"
-              content="2023-11-27">
-          11-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/27/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" itemprop="url">
-            <span itemprop="name">基于B树的文献管理系统</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-26T00:15:24+08:00"
-              content="2023-11-26">
-          11-26
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/26/%E7%BA%A2%E9%BB%91%E6%A0%91%E6%8F%92%E5%85%A5%E5%88%A0%E9%99%A4%E5%92%8C%E5%8F%AF%E8%A7%86%E5%8C%96/" itemprop="url">
-            <span itemprop="name">红黑树插入删除和可视化的代码实现</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-25T13:40:59+08:00"
-              content="2023-11-25">
-          11-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/" itemprop="url">
-            <span itemprop="name">XSS跨站攻击漏洞的示例和简单介绍</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-25T10:33:57+08:00"
-              content="2023-11-25">
-          11-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/" itemprop="url">
-            <span itemprop="name">linux 防火墙操作命令使用</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-
+        </div>
     </div>
   </div>
-  
-  
-  
 
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/05/SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E6%B3%A8/" rel="prev" title="SQL注入-盲注">
+      <i class="fa fa-chevron-left"></i> SQL注入-盲注
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/12/05/PHP%E5%AD%A6%E4%B9%A0-%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92%E5%A4%84%E7%90%86/" rel="next" title="PHP学习-前后端交互处理">
+      PHP学习-前后端交互处理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2023/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2023/">1</a><span class="page-number current">2</span>
-  </nav>
+  
+  
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTIzMS8zNTY5Mw=="></div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -606,6 +594,21 @@ setInterval("createtime()",250);
 
   
 
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
 
 </body>
 </html>
