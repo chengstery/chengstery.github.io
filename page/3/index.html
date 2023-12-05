@@ -28,7 +28,7 @@
   <meta name="description" content="选择有时候比努力更重要">
 <meta property="og:type" content="website">
 <meta property="og:title" content="chengstery">
-<meta property="og:url" content="https://chengstery.top/archives/2023/page/2/index.html">
+<meta property="og:url" content="https://chengstery.top/page/3/index.html">
 <meta property="og:site_name" content="chengstery">
 <meta property="og:description" content="选择有时候比努力更重要">
 <meta property="og:locale" content="zh_CN">
@@ -36,20 +36,20 @@
 <meta property="article:tag" content="coding">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://chengstery.top/archives/2023/page/2/">
+<link rel="canonical" href="https://chengstery.top/page/3/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
+    isHome : true,
     isPost : false,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | chengstery</title>
+  <title>chengstery</title>
   
 
 
@@ -168,233 +168,150 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/">
 
-  
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 21 篇日志。 继续努力。</span>
-      </div>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="stery">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chengstery">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/25/linux%20%E9%98%B2%E7%81%AB%E5%A2%99/" class="post-title-link" itemprop="url">linux 防火墙操作命令使用</a>
+        </h2>
+
+        <div class="post-meta">
+		
+		  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-25 10:33:57" itemprop="dateCreated datePublished" datetime="2023-11-25T10:33:57+08:00">2023-11-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-28 19:05:57" itemprop="dateModified" datetime="2023-11-28T19:05:57+08:00">2023-11-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>943</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
+          <p>firewall-cmd 命令是用于管理防火墙的命令，该命令可以用于 CentOS&#x2F;RHEL 7 和更高版本中的防火墙管理。<br>以下是一个关于 firewall-cmd 命令用法的完整介绍：</p>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=zone-name --add-service=service-name --permanent</span><br></pre></td></tr></table></figure>
+<h2 id="命令参数"><a href="#命令参数" class="headerlink" title="命令参数"></a>命令参数</h2><ul>
+<li>–zone：指定要添加服务的区域名称。</li>
+<li>–add-service：指定要添加的服务名称。</li>
+<li>–permanent：指定该规则永久生效。</li>
+</ul>
+<p>除此之外，还有其他可选参数：</p>
+<ul>
+<li>–list-all：列出所有规则。</li>
+<li>–reload：重新加载防火墙规则。</li>
+<li>–permanent：将规则保存到永久配置中，以便系统重启后仍然有效。</li>
+<li>–delete-service：删除服务。</li>
+<li>–list-services：列出当前系统中所有可用服务。</li>
+<li>–add-source：添加一个 IP 或 IP 段。</li>
+<li>–remove-source：删除一个 IP 或 IP 段。</li>
+<li>–list-sources：列出所有已添加的 IP 或 IP 段。</li>
+<li>–add-port：添加端口。</li>
+<li>–remove-port：删除端口。</li>
+<li>–list-ports：列出所有已添加的端口。</li>
+<li>–add-rich-rule：添加一个更加复杂的规则。</li>
+<li>–query-service：查询服务是否可用。</li>
+<li>–get-zones：列出所有可用的区域。</li>
+<li>–zone&#x3D;zone-name：指定一个区域。</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ol>
+<li><p>添加端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --remove-port=80/tcp --permanent</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-service=http --permanent</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --remove-service=http --permanent</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列出所有规则：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --list-all</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新加载防火墙规则：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列出所有可用的服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --list-services</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-12-04T22:59:12+08:00"
-              content="2023-12-04">
-          12-04
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/12/04/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-SQL%E6%B3%A8%E5%85%A5%E9%98%B2%E6%8A%A4/" itemprop="url">
-            <span itemprop="name">SQL注入-登录漏洞-SQL注入防护</span>
-          </a>
-      </div>
-
-    </header>
+    
+    
+    
+	
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-12-03T23:45:53+08:00"
-              content="2023-12-03">
-          12-03
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/12/03/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-%E9%AA%8C%E8%AF%81%E7%A0%81/" itemprop="url">
-            <span itemprop="name">SQL注入-登录漏洞-验证码</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-12-03T23:13:56+08:00"
-              content="2023-12-03">
-          12-03
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/12/03/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-%E5%9F%BA%E7%A1%80%E4%BF%AE%E5%A4%8D/" itemprop="url">
-            <span itemprop="name">SQL注入-登录漏洞-基础修复</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-12-02T23:39:04+08:00"
-              content="2023-12-02">
-          12-02
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/12/02/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-4/" itemprop="url">
-            <span itemprop="name">学习渗透测试的学前准备-后台-2</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-12-02T21:31:20+08:00"
-              content="2023-12-02">
-          12-02
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/12/02/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-3/" itemprop="url">
-            <span itemprop="name">学习渗透测试的学前准备-后台-1</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T23:30:28+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-2/" itemprop="url">
-            <span itemprop="name">学习渗透测试的学前准备-前端-2</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-28T22:32:24+08:00"
-              content="2023-11-28">
-          11-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/28/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-1/" itemprop="url">
-            <span itemprop="name">学习渗透测试的学前准备-前端-1</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-27T01:02:03+08:00"
-              content="2023-11-27">
-          11-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/27/%E5%9F%BA%E4%BA%8EB%E6%A0%91%E7%9A%84%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" itemprop="url">
-            <span itemprop="name">基于B树的文献管理系统</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-26T00:15:24+08:00"
-              content="2023-11-26">
-          11-26
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/26/%E7%BA%A2%E9%BB%91%E6%A0%91%E6%8F%92%E5%85%A5%E5%88%A0%E9%99%A4%E5%92%8C%E5%8F%AF%E8%A7%86%E5%8C%96/" itemprop="url">
-            <span itemprop="name">红黑树插入删除和可视化的代码实现</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-11-25T13:40:59+08:00"
-              content="2023-11-25">
-          11-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/11/25/XSS%E8%B7%A8%E7%AB%99%E6%94%BB%E5%87%BB%E6%BC%8F%E6%B4%9E/" itemprop="url">
-            <span itemprop="name">XSS跨站攻击漏洞的示例和简单介绍</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-
-    </div>
-  </div>
   
   
   
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2023/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2023/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2023/page/3/">3</a><a class="extend next" rel="next" href="/archives/2023/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
   </nav>
 
 
