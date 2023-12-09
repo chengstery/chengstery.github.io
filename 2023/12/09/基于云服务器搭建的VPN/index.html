@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="nh3ByVgtBDMuDzx9WPPasKOnTS2Nd3B9mjaJsNOaGCI" />
+  <meta name="baidu-site-verification" content="codeva-HzZC51BtJE" />
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chengstery.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言 本文主要介绍如何在云服务器上搭建VPN，以及如何在本地连接VPN。请不要用于非法用途，否则后果自负。本文仅供学习使用。出现任何问题与本人无关。  一、云服务器 我是在vultr上购买的云服务器，vultr是一家美国的云服务器提供商，价格便宜，速度快，可以自行注册购买。vultr还是有很多新用户活动的，如新用户注册送50还是100美元或充多少送多少最高一百美元，具体可以自行搜索了解活动情况。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于云服务器搭建的VPN">
+<meta property="og:url" content="https://chengstery.top/2023/12/09/%E5%9F%BA%E4%BA%8E%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%E7%9A%84VPN/index.html">
+<meta property="og:site_name" content="chengstery">
+<meta property="og:description" content="前言 本文主要介绍如何在云服务器上搭建VPN，以及如何在本地连接VPN。请不要用于非法用途，否则后果自负。本文仅供学习使用。出现任何问题与本人无关。  一、云服务器 我是在vultr上购买的云服务器，vultr是一家美国的云服务器提供商，价格便宜，速度快，可以自行注册购买。vultr还是有很多新用户活动的，如新用户注册送50还是100美元或充多少送多少最高一百美元，具体可以自行搜索了解活动情况。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chengstery.top/images/vultr1.png">
+<meta property="og:image" content="https://chengstery.top/images/vultr2.png">
+<meta property="og:image" content="https://chengstery.top/images/vultr3.png">
+<meta property="og:image" content="https://chengstery.top/images/vultr4.png">
+<meta property="og:image" content="https://chengstery.top/images/vpn1.png">
+<meta property="og:image" content="https://chengstery.top/images/vpn2.png">
+<meta property="og:image" content="https://chengstery.top/images/vpn3.png">
+<meta property="og:image" content="https://chengstery.top/images/vpn4.png">
+<meta property="article:published_time" content="2023-12-09T12:48:16.500Z">
+<meta property="article:modified_time" content="2023-12-09T12:46:43.745Z">
+<meta property="article:author" content="stery">
+<meta property="article:tag" content="coding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chengstery.top/images/vultr1.png">
+
+<link rel="canonical" href="https://chengstery.top/2023/12/09/%E5%9F%BA%E4%BA%8E%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%E7%9A%84VPN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>基于云服务器搭建的VPN | chengstery</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/rss2.xml" title="chengstery" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"><a target="_blank" rel="noopener" href="https://chengstery.github.io/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">chengstery</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-tasks fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chengstery.top/2023/12/09/%E5%9F%BA%E4%BA%8E%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%E7%9A%84VPN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="stery">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chengstery">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于云服务器搭建的VPN
+        </h1>
+
+        <div class="post-meta">
+		
+		  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-12-09 20:48:16 / 修改时间：20:46:43" itemprop="dateCreated datePublished" datetime="2023-12-09T20:48:16+08:00">2023-12-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VPN/" itemprop="url" rel="index"><span itemprop="name">VPN</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>本文主要介绍如何在云服务器上搭建VPN，以及如何在本地连接VPN。<br>请不要用于非法用途，否则后果自负。本文仅供学习使用。出现任何问题与本人无关。</p>
+</blockquote>
+<h1 id="一、云服务器"><a href="#一、云服务器" class="headerlink" title="一、云服务器"></a>一、云服务器</h1><blockquote>
+<p>我是在<a target="_blank" rel="noopener" href="https://my.vultr.com/">vultr</a>上购买的云服务器，vultr是一家美国的云服务器提供商，价格便宜，速度快，可以自行注册购买。<br>vultr还是有很多新用户活动的，如新用户注册送50还是100美元或充多少送多少最高一百美元，具体可以自行搜索了解活动情况。</p>
+</blockquote>
+<h2 id="1-购买服务器"><a href="#1-购买服务器" class="headerlink" title="1. 购买服务器"></a>1. 购买服务器</h2><blockquote>
+<p>点击 <strong>Products</strong>，进入下面页面购买服务器</p>
+</blockquote>
+<p>以下是我的选择，仅供参考</p>
+<p><img src="/../images/vultr1.png" alt="vultr"></p>
+<blockquote>
+<p>服务器尽量选择美国西部（西雅图、洛杉矶、圣何塞、硅谷），速度快点，纽约有个更便宜的也可以选择，但是速度可能会慢点（但不要选onlyipv6-2.5美元的，这个可能搭不了vpn,选那个3.5美元的）。</p>
+</blockquote>
+<p><img src="/../images/vultr2.png" alt="vultr"></p>
+<blockquote>
+<p>服务器系统我选择的是CentOS8，其他的系统也可以，但是我只试过CentOS8，其他系统可能会有问题，所以建议选择CentOS8。</p>
+</blockquote>
+<h2 id="2-服务器设置"><a href="#2-服务器设置" class="headerlink" title="2. 服务器设置"></a>2. 服务器设置</h2><blockquote>
+<p>服务器购买成功后，点击 <strong>Cloud Instance</strong>，进入下面页面</p>
+</blockquote>
+<p><img src="/../images/vultr3.png" alt="vultr"></p>
+<h2 id="3-ssh连接服务器"><a href="#3-ssh连接服务器" class="headerlink" title="3. ssh连接服务器"></a>3. ssh连接服务器</h2><blockquote>
+<p>我用的是<strong>finalshell</strong>连接服务器，其他的ssh工具也可以，如xshell等。下面是连接成功后的页面</p>
+</blockquote>
+<p><img src="/../images/vultr4.png" alt="vultr"></p>
+<h1 id="二、搭建VPN"><a href="#二、搭建VPN" class="headerlink" title="二、搭建VPN"></a>二、搭建VPN</h1><p>添加epel源，确保可以正确安装shadowsocks的各项依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install epel-release -y</span><br></pre></td></tr></table></figure>
+
+<p>安装完epel后清理配置并重建缓存</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum clean all</span><br><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
+<p>更新yum，中途如果询问 Is this ok? 输入y回车。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum update</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h2><p>首先安装git并用git下载shadowsocks源码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install git -y</span><br></pre></td></tr></table></figure>
+
+<p>git安装完成后，下载shadowsocks源码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/shadowsocks/shadowsocks-libev.git</span><br></pre></td></tr></table></figure>
+
+<p>进入刚下载的源码目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> shadowsocks-libev</span><br></pre></td></tr></table></figure>
+
+<p>更新子模块</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule update --init --recursive</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>接下来安装shadowsocks的各种依赖 要注意输出的安装信息确保所有依赖正确安装，如各别依赖无法自动安装则需手动安装，一般正确更新了epel源都可以自动安装所有依赖</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto c-ares-devel libev-devel libsodium-devel mbedtls-devel -y</span><br></pre></td></tr></table></figure>
+
+<p>依赖全部成功安装后，用源码编译安装shadowsocks</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./autogen.sh &amp;&amp; ./configure &amp;&amp; make</span><br></pre></td></tr></table></figure>
+
+<p>make完成后进行安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-用户配置"><a href="#1-用户配置" class="headerlink" title="1.用户配置"></a>1.用户配置</h2><p>在任意目录下建立一个配置文件，例如在root目录下建立ss_serverConfig</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /root/ss_serverConfig</span><br></pre></td></tr></table></figure>
+
+<p>然后把下面的配置内容拷贝进去，如果不会用vi编辑命令，keyi直接用xshell或者finalshell等工具编辑</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;server&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">&quot;server_port&quot;: 8288,</span><br><span class="line">&quot;local_port&quot;: 2080,</span><br><span class="line">&quot;password&quot;: &quot;fjc666&quot;,</span><br><span class="line">&quot;timeout&quot;: 1000,</span><br><span class="line">&quot;method&quot;: &quot;chacha20-ietf-poly1305&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里server直接填0.0.0.0就行，server_port默认8388，可以改例如改成8288，local_port也可以自己改，比如我改成2080。<br>password密码可以改一下。<br>method 加密方式，建议优先选chacha20-ietf-poly1305，若客户端不支持，可选aes-256-cfb</p>
+</blockquote>
+<p>配置完保存好之后运行命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss-server -c /root/ss_serverConfig</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这样运行之后如果我们退出连接服务就中断了。<br>所以我们可以使用nohup使程序与登陆账户无关，不再接收账户退出时的退出信号。这样我们登出服务器后服务仍然继续运行着。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nohup</span> ss-server -c /root/ss_serverConfig &amp;</span><br></pre></td></tr></table></figure>
+<p>如果运行完nohup命令看到 nohup: ignoring input and appending output to ‘nohup.out’这个消息，可以不用管，服务在运行了。</p>
+<h2 id="2-多用户配置"><a href="#2-多用户配置" class="headerlink" title="2.多用户配置"></a>2.多用户配置</h2><blockquote>
+<p>如果你要设置几个帐号登陆，可以创建多个配置文件<br>多用户配置文件与单用户不同，我们还是在root下创建一个ss_managerConfig</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /root/ss_managerConfig</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>然后复制下面的配置内容并保存。这里请把#后面的注释删掉再使用，注释只是为了提示你要怎么配置。<br>多用户配置时，应用ss-manager而不是ss-server</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;: &quot;你vps的ip地址&quot;, # 你vps的ip地址</span><br><span class="line">    &quot;local_port&quot;: 2080, # 本地端口，自行设定</span><br><span class="line">    &quot;timeout&quot;: 600, # 超时毫秒数</span><br><span class="line">    &quot;method&quot;: &quot;chacha20-ietf-poly1305&quot;, # 加密方式，建议优先选chacha20-ietf-poly1305，若客户端不支持，可选aes-256-cfb</span><br><span class="line">    &quot;port_password&quot;: &#123;</span><br><span class="line">    &quot;8385&quot;: &quot;fjc8385&quot;, # 端口号与密码</span><br><span class="line">    &quot;8386&quot;: &quot;fjc8386&quot;,</span><br><span class="line">    &quot;8387&quot;: &quot;fjc8387&quot;,</span><br><span class="line">    &quot;8388&quot;: &quot;fjc8388&quot;,</span><br><span class="line">    &quot;8389&quot;: &quot;fjc8389&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行下面的命令启动</p>
+<p>特别是注意多用户是 **<em>ss-manager</em>**，单用户是 <strong><em>ss-serve</em></strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss-manager -c /root/ss_managerConfig</span><br></pre></td></tr></table></figure>
+
+<p>如下图所示，表示成功运行。</p>
+<p><img src="/../images/vpn1.png" alt="vpn"></p>
+<blockquote>
+<p>相应的nohup命令</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nohup</span> ss-manager -c /root/ss_managerConfig &amp;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-设置shadowsocks开机自启动"><a href="#3-设置shadowsocks开机自启动" class="headerlink" title="3.设置shadowsocks开机自启动"></a>3.设置shadowsocks开机自启动</h2><blockquote>
+<p>根据，我们已经可以使shadowsocks服务良好地运行了，但是每次服务器重启了的话要重新运行一下shadowsocks。我们就可以使用centos8的systemctl将程序注册为一个随着开机自动启动的服务。<br>centos8设置自启动时，在&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system下新建一个.service文件，例如vpn.service。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/lib/systemd/system/vpn.service</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将配置内容复制进去并保存，#后面的注释去掉</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=shadowsocks manager # 服务的描述</span><br><span class="line">After=network.target # 该服务跟在哪个服务后启动</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking # 启动时的进程行为，forking是以fork形式从父进程创建子进程，子进程创建后父进程退出</span><br><span class="line">ExecStart=/root/startVPN # 启动服务时执行的命令</span><br><span class="line">PrivateTmp=true # 使用私有临时文件目录</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target # 附挂在multi-user.target下</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>因为ExecStart指令串仅接受“指令 参数 参数…”的格式，不能接受&lt;，&gt;，»，|，&amp;等特殊字符，很多的 bash 语法也不支持。 所以，要使用这些特殊的字符时，直接写入到指令脚本里面。<br>将以上命令写在一个bash可执行文件中，例如startVPN。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /root/startVPN</span><br></pre></td></tr></table></figure>
+
+<p><strong>复制一下脚本内容，这里第一行#!&#x2F;bin&#x2F;bash必须保留，否则后面执行会报错。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">cd</span> shadowsocks-libev</span><br><span class="line"><span class="built_in">nohup</span> ss-server -c /root/ss_serverConfig &amp;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>保存文件后增加执行权限</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 754 startVPN</span><br></pre></td></tr></table></figure>
+
+<p>所有配置文件与脚本都设置完毕，使用systemctl开启服务。 更改.service文件后，都要重载守护进程更新systemctl</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>启动服务</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/lib/systemd/system</span><br><span class="line">systemctl start vpn.service</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>查看服务状态，若为绿色active(running)则说明服务成功启动</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status vpn.service</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/vpn2.png" alt="vpn"></p>
+<p><strong>设置服务开机自启动</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> vpn.service</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <code>systemctl restart vpn.service</code> 重启服务，使用 <code>systemctl stop vpn.service</code> 停止服务</p>
+<h1 id="三、shadowsocks客户端连接"><a href="#三、shadowsocks客户端连接" class="headerlink" title="三、shadowsocks客户端连接"></a>三、shadowsocks客户端连接</h1><p>在<a target="_blank" rel="noopener" href="https://github.com/shadowsocks">https://github.com/shadowsocks</a>下载对应的版本，下面演示的是windows客户端，其他系统的客户端也可以。</p>
+<p><img src="/../images/vpn3.png" alt="vpn"></p>
+<blockquote>
+<p>输入你的用户配置即可</p>
+</blockquote>
+<p><img src="/../images/vpn4.png" alt="vpn"></p>
+<blockquote>
+<p>最后选择pac模式或全局模式就可以使用vpn了，pac模式是只有访问国外网站才走代理，全局模式是所有网站都走代理。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+	
+	
+      <div>
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-atom"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+	
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>stery
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chengstery.top/2023/12/09/%E5%9F%BA%E4%BA%8E%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%E7%9A%84VPN/" title="基于云服务器搭建的VPN">https://chengstery.top/2023/12/09/基于云服务器搭建的VPN/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/06/SQL%E6%B3%A8%E5%85%A5-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E5%8F%8A%E6%9C%A8%E9%A9%AC%E6%A4%8D%E5%85%A5/" rel="prev" title="SQL注入-文件读写及木马植入">
+      <i class="fa fa-chevron-left"></i> SQL注入-文件读写及木马植入
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81OTIzMS8zNTY5Mw=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">一、云服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%B4%AD%E4%B9%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">1. 购买服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">2. 服务器设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-ssh%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.3.</span> <span class="nav-text">3. ssh连接服务器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%90%AD%E5%BB%BAVPN"><span class="nav-number">3.</span> <span class="nav-text">二、搭建VPN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85shadowsocks"><span class="nav-number">3.1.</span> <span class="nav-text">安装shadowsocks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">1.用户配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%A4%9A%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE"><span class="nav-number">3.3.</span> <span class="nav-text">2.多用户配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%AE%BE%E7%BD%AEshadowsocks%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="nav-number">3.4.</span> <span class="nav-text">3.设置shadowsocks开机自启动</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81shadowsocks%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5"><span class="nav-number">4.</span> <span class="nav-text">三、shadowsocks客户端连接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="stery"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">stery</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chengstery" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chengstery" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:fjc663@outlook.com" title="E-Mail → mailto:fjc663@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://baidu.com/" title="https:&#x2F;&#x2F;baidu.com" rel="noopener" target="_blank">百度</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://fishc.com.cn/" title="https:&#x2F;&#x2F;fishc.com.cn" rel="noopener" target="_blank">鱼C论坛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">stery</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">96k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:27</span>
+</div>
+  <div class="powered-by">
+    <!--由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动-->
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共28.7k字</span>
+</div>
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("11/24/2023 10:00:00"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒.";
+    }
+setInterval("createtime()",250);
+</script>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
